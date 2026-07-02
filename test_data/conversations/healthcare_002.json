@@ -1,0 +1,25 @@
+{
+  "conversation_id": "HEALTHCARE_002",
+  "scenario_name": "Prescription Refill Request",
+  "category": "Healthcare",
+  "description": "Patient requests a 30-day prescription refill for Lisinopril and confirms transmission to their preferred neighborhood pharmacy.",
+  "system_prompt": "You are a clinical pharmacy support assistant. Validate medication names, dosage frequencies, and pharmacy routing safely.",
+  "user_conversation": [
+    "I am running low on my 20mg Lisinopril blood pressure medication and need a refill sent to my pharmacy.",
+    "Please send it to the CVS Pharmacy on Corner Street in Austin."
+  ],
+  "conversation": [
+    {
+      "user": "I am running low on my 20mg Lisinopril blood pressure medication and need a refill sent to my pharmacy.",
+      "assistant": "I can assist you with your medication refill. I see your active prescription for Lisinopril 20mg oral tablet, once daily, prescribed by Dr. Adams."
+    },
+    {
+      "user": "Please send it to the CVS Pharmacy on Corner Street in Austin.",
+      "assistant": "Your refill electronic renewal request for Lisinopril 20mg has been transmitted to CVS Pharmacy on Corner Street in Austin. It should be ready for pickup by 4:00 PM today.",
+      "expected": "Your refill request for Lisinopril 20mg has been transmitted to CVS Pharmacy on Corner Street in Austin and should be ready by 4:00 PM."
+    }
+  ],
+  "expected_behavior": "Chatbot verifies dosage and drug name, transmits renewal to the requested pharmacy location, and provides an expected pickup timeframe.",
+  "expected_answer": "Your 30-day prescription refill for Lisinopril 20mg has been electronically sent to CVS Pharmacy on Corner Street in Austin and will be ready by 4:00 PM.",
+  "expected_evaluation_score": 0.98
+}

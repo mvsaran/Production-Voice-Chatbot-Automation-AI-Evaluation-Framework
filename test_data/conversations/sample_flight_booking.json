@@ -1,0 +1,18 @@
+{
+  "conversation_id": "SCENARIO_FLIGHT_001",
+  "scenario_name": "Flight Ticket Booking Turn",
+  "description": "User requests to book a ticket for tomorrow; chatbot should ask for the destination and departure time.",
+  "system_prompt": "You are a helpful airline flight booking assistant.",
+  "conversation": [
+    {
+      "user": "Hello",
+      "assistant": "Hello! How can I help you with your travel plans today?"
+    },
+    {
+      "user": "Book ticket tomorrow",
+      "audio_path": "test_data/sample.wav",
+      "expected": "Sure, where is your destination and what time would you like to depart?"
+    }
+  ],
+  "expected_behavior": "Bot asks destination and departure time for tomorrow flight booking."
+}

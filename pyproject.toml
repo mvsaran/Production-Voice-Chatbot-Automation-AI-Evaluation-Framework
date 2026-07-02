@@ -1,0 +1,86 @@
+[build-system]
+requires = ["setuptools>=68.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "voice-chatbot-automation"
+version = "0.2.0"
+description = "Production-ready Voice Chatbot Automation & AI Evaluation Framework using FastAPI, Whisper, GPT-4o, TTS, and DeepEval"
+readme = "README.md"
+requires-python = ">=3.12"
+authors = [
+    {name = "Principal AI Engineer, Senior AI SDET & AI Evaluation Engineer"}
+]
+license = {text = "MIT"}
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.12",
+    "Framework :: FastAPI",
+    "Framework :: Pytest",
+    "Topic :: Software Development :: Quality Assurance",
+    "Topic :: Software Development :: Testing :: Traffic Generation",
+    "Topic :: Multimedia :: Sound/Audio :: Speech",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence"
+]
+
+dependencies = [
+    "fastapi>=0.111.0",
+    "uvicorn[standard]>=0.30.0",
+    "aiofiles>=24.1.0",
+    "httpx>=0.27.0",
+    "pydantic>=2.7.0",
+    "pydantic-settings>=2.3.0",
+    "python-dotenv>=1.0.1",
+    "pyyaml>=6.0.1",
+    "jinja2>=3.1.4",
+    "pandas>=2.2.0",
+    "openai>=1.35.0",
+    "sounddevice>=0.4.7",
+    "numpy>=1.26.0",
+    "scipy>=1.13.0",
+    "loguru>=0.7.2",
+    "deepeval>=1.4.0",
+    "jiwer>=3.0.3",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.2.0",
+    "pytest-asyncio>=0.23.0",
+    "pytest-cov>=5.0.0",
+    "pytest-mock>=3.14.0",
+    "pytest-html>=4.1.1",
+    "pytest-xdist>=3.5.0",
+    "black>=24.4.0",
+    "ruff>=0.4.0",
+    "mypy>=1.10.0"
+]
+
+[tool.pytest.ini_options]
+minversion = "8.0"
+addopts = "-ra -q --cov=app --cov=evaluation --cov-report=term-missing --asyncio-mode=auto --html=reports/html/report.html --self-contained-html"
+testpaths = [
+    "app/tests",
+    "tests",
+]
+python_files = ["test_*.py"]
+markers = [
+    "smoke: Quick sanity check smoke test suite",
+    "functional: Functional automation tests executing voice conversations end-to-end",
+    "regression: Regression test suites comparing responses against baselines",
+    "voice: Voice quality evaluation tests (WER, CER, recognition latency)",
+    "conversation: Multi-turn conversation validation and flow tests",
+    "safety: Prompt security, injection protection, toxicity, and PII leakage tests",
+    "negative: Negative test suites for audio corruption, timeouts, and network failures",
+    "unit: Unit test suite for individual components and functions",
+    "integration: Integration test suite with mocked external APIs"
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+ignore_missing_imports = true

@@ -1,0 +1,25 @@
+{
+  "conversation_id": "TRAVEL_005",
+  "scenario_name": "Special Dietary Meal Request",
+  "category": "Travel",
+  "description": "Passenger requests to attach a strict vegan dietary meal preference to their upcoming international flight booking.",
+  "system_prompt": "You are airline passenger service AI. Manage special in-flight service requests including dietary meals, wheelchair assistance, and seat selections.",
+  "user_conversation": [
+    "I am flying to London next Tuesday on booking reference K92P1X. I need to request a strict vegan meal for my flight.",
+    "How far in advance of departure must special meal requests be confirmed?"
+  ],
+  "conversation": [
+    {
+      "user": "I am flying to London next Tuesday on booking reference K92P1X. I need to request a strict vegan meal for my flight.",
+      "assistant": "I have accessed booking K92P1X and successfully added a Vegan Vegetarian Meal (VGML) special request to your seat assignment for your flight to London."
+    },
+    {
+      "user": "How far in advance of departure must special meal requests be confirmed?",
+      "assistant": "All special dietary meal requests must be submitted and confirmed at least 24 hours prior to the scheduled flight departure time to ensure catering delivery.",
+      "expected": "All special dietary meal requests must be submitted and confirmed at least 24 hours prior to scheduled flight departure."
+    }
+  ],
+  "expected_behavior": "Chatbot adds VGML code to passenger PNR and accurately informs user of the mandatory 24-hour advance notice cutoff for airline catering.",
+  "expected_answer": "I have added a Vegan Vegetarian Meal (VGML) request to your booking K92P1X for your flight to London. Please note that special meals must be confirmed at least 24 hours before departure.",
+  "expected_evaluation_score": 0.98
+}

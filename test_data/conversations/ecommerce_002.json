@@ -1,0 +1,25 @@
+{
+  "conversation_id": "ECOMMERCE_002",
+  "scenario_name": "Defective Item Return Authorization",
+  "category": "E-commerce",
+  "description": "Customer reports receiving a malfunctioning Bluetooth speaker and requests a prepaid return label and full refund.",
+  "system_prompt": "You are an e-commerce returns and warranty specialist. Guide customers through return authorization, prepaid labels, and refund timelines.",
+  "user_conversation": [
+    "I received my order #ORD-8812 yesterday, but the wireless speaker won't turn on or hold a charge. I want to return it for a refund.",
+    "Do I have to pay for return shipping for a defective product?"
+  ],
+  "conversation": [
+    {
+      "user": "I received my order #ORD-8812 yesterday, but the wireless speaker won't turn on or hold a charge. I want to return it for a refund.",
+      "assistant": "I am very sorry that your speaker arrived defective. I have authorized a return for order #ORD-8812 and emailed a prepaid UPS return shipping label to your account address."
+    },
+    {
+      "user": "Do I have to pay for return shipping for a defective product?",
+      "assistant": "No! Because the item arrived defective, return shipping is 100% free. Once UPS scans the return package, your full refund of $89.99 will be issued to your original payment card within 3 business days.",
+      "expected": "No, return shipping is completely free for defective items, and a full refund will be issued within 3 business days of return scanning."
+    }
+  ],
+  "expected_behavior": "Chatbot issues prepaid return label, confirms zero cost for defective returns, and states exact refund timeline upon carrier drop-off.",
+  "expected_answer": "I have emailed you a free prepaid UPS return label for order #ORD-8812. You will receive a full refund of $89.99 to your original payment method within 3 business days of dropping off the package.",
+  "expected_evaluation_score": 0.96
+}

@@ -1,0 +1,25 @@
+{
+  "conversation_id": "HEALTHCARE_004",
+  "scenario_name": "Specialist Consultation Copay Check",
+  "category": "Healthcare",
+  "description": "Patient inquires about out-of-pocket copay costs for seeing an orthopedic cardiologist specialist under their Gold PPO health plan.",
+  "system_prompt": "You are a healthcare benefits eligibility assistant. Provide accurate medical copayment, coinsurance, and referral requirements.",
+  "user_conversation": [
+    "I need to see an orthopedic specialist for my knee. What is my consultation copay under my Gold PPO plan?",
+    "Do I need a formal referral from my primary care physician before booking?"
+  ],
+  "conversation": [
+    {
+      "user": "I need to see an orthopedic specialist for my knee. What is my consultation copay under my Gold PPO plan?",
+      "assistant": "Under your active Gold PPO health plan, in-network specialist office visits have a fixed copayment of $45.00 per consultation."
+    },
+    {
+      "user": "Do I need a formal referral from my primary care physician before booking?",
+      "assistant": "No, because you are enrolled in a PPO (Preferred Provider Organization) plan, you do not need a referral from your primary care physician to schedule an in-network orthopedic specialist visit.",
+      "expected": "Because you are enrolled in a PPO plan, you do not need a referral from your primary care physician to see an in-network specialist."
+    }
+  ],
+  "expected_behavior": "Chatbot states the exact specialist copay ($45) and accurately explains that PPO plans do not require a PCP referral for in-network specialist scheduling.",
+  "expected_answer": "Your in-network specialist consultation copay under the Gold PPO plan is $45.00, and no primary care physician referral is required to book your orthopedic appointment.",
+  "expected_evaluation_score": 0.98
+}

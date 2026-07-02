@@ -1,0 +1,25 @@
+{
+  "conversation_id": "BANKING_001",
+  "scenario_name": "Checking Account Balance Inquiry",
+  "category": "Banking",
+  "description": "User inquires about their checking account balance and recent transactions; chatbot should provide accurate financial summaries after verifying account context.",
+  "system_prompt": "You are a secure AI banking assistant. Provide clear, professional financial information while maintaining privacy and accuracy.",
+  "user_conversation": [
+    "Hi, I would like to check the current balance on my primary checking account.",
+    "Can you also tell me the amount and date of my most recent posted transaction?"
+  ],
+  "conversation": [
+    {
+      "user": "Hi, I would like to check the current balance on my primary checking account.",
+      "assistant": "Hello! I can certainly help you with your account summary. Your primary checking account ending in 4321 has a current available balance of $4,850.25."
+    },
+    {
+      "user": "Can you also tell me the amount and date of my most recent posted transaction?",
+      "assistant": "Your most recent posted transaction was a debit of $64.30 at Whole Foods Market on July 1st.",
+      "expected": "Your most recent posted transaction was a debit of $64.30 at Whole Foods Market on July 1st."
+    }
+  ],
+  "expected_behavior": "Chatbot correctly identifies the checking account balance and states the exact date and amount of the last transaction in a concise, professional tone.",
+  "expected_answer": "Your primary checking account ending in 4321 has a current available balance of $4,850.25, and your most recent posted transaction was a debit of $64.30 at Whole Foods Market on July 1st.",
+  "expected_evaluation_score": 0.98
+}

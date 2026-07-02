@@ -1,0 +1,25 @@
+{
+  "conversation_id": "INSURANCE_004",
+  "scenario_name": "Homeowners Water Damage Coverage",
+  "category": "Insurance",
+  "description": "Homeowner inquires whether interior hardwood floor damage caused by a sudden burst plumbing pipe is covered under their HO-3 property policy.",
+  "system_prompt": "You are a property insurance coverage advisor. Explain policy inclusions and exclusions regarding plumbing discharges and flood waters accurately.",
+  "user_conversation": [
+    "A kitchen pipe suddenly burst this morning and soaked my hardwood floors. Is water damage from a burst plumbing pipe covered by my homeowners policy?",
+    "Does this also cover the cost of a plumber to repair the broken pipe itself?"
+  ],
+  "conversation": [
+    {
+      "user": "A kitchen pipe suddenly burst this morning and soaked my hardwood floors. Is water damage from a burst plumbing pipe covered by my homeowners policy?",
+      "assistant": "Yes, under your standard HO-3 Homeowners policy, sudden and accidental water discharge from a broken internal plumbing pipe is covered for interior damage, including drying and replacing your hardwood floors, subject to your $1,000 deductible."
+    },
+    {
+      "user": "Does this also cover the cost of a plumber to repair the broken pipe itself?",
+      "assistant": "While the policy covers the structural tearing out and replacing of walls or floors necessary to access the plumbing, the actual physical repair or replacement cost of the broken pipe itself is considered home maintenance and is not covered.",
+      "expected": "The policy covers tearing out and replacing floors/walls to access the pipe, but the plumber's repair cost of the broken pipe itself is not covered."
+    }
+  ],
+  "expected_behavior": "Chatbot confirms coverage for sudden water damage to floors while accurately explaining the standard exclusion for repairing the broken pipe component itself.",
+  "expected_answer": "Your HO-3 policy covers the water damage to your hardwood floors from a sudden pipe burst after your deductible. However, the cost of the plumbing repair for the broken pipe itself is considered general maintenance and is not covered.",
+  "expected_evaluation_score": 0.95
+}

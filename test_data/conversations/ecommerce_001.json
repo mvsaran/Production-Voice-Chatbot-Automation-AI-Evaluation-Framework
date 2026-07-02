@@ -1,0 +1,25 @@
+{
+  "conversation_id": "ECOMMERCE_001",
+  "scenario_name": "Delayed Package Order Tracking",
+  "category": "E-commerce",
+  "description": "Customer checks delivery status of an order that has surpassed its estimated arrival date; chatbot provides live carrier tracking updates.",
+  "system_prompt": "You are an e-commerce customer tracking assistant. Provide accurate carrier shipping statuses, tracking numbers, and updated delivery windows.",
+  "user_conversation": [
+    "My order #ORD-5541 was supposed to arrive yesterday, but I haven't received it yet. Can you check where it is?",
+    "Which shipping carrier is handling the delivery and what is the tracking number?"
+  ],
+  "conversation": [
+    {
+      "user": "My order #ORD-5541 was supposed to arrive yesterday, but I haven't received it yet. Can you check where it is?",
+      "assistant": "I apologize for the delivery delay. I checked order #ORD-5541, and it is currently out for delivery today with an estimated arrival between 2:00 PM and 5:00 PM."
+    },
+    {
+      "user": "Which shipping carrier is handling the delivery and what is the tracking number?",
+      "assistant": "Your package is being shipped via FedEx Ground, and your tracking number is 7894-5612-3001. You can track it live on the FedEx website.",
+      "expected": "Your package is being shipped via FedEx Ground with tracking number 7894-5612-3001."
+    }
+  ],
+  "expected_behavior": "Chatbot acknowledges delay empathetically, provides updated delivery window (today 2-5 PM), and states exact carrier (FedEx Ground) and tracking number.",
+  "expected_answer": "Order #ORD-5541 is out for delivery today between 2:00 PM and 5:00 PM via FedEx Ground. Your tracking number is 7894-5612-3001.",
+  "expected_evaluation_score": 0.97
+}

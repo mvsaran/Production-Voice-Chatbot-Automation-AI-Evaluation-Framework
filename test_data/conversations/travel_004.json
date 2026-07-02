@@ -1,0 +1,25 @@
+{
+  "conversation_id": "TRAVEL_004",
+  "scenario_name": "Frequent Flyer Upgrade Redemption",
+  "category": "Travel",
+  "description": "Loyalty program member inquires how many reward miles are required to upgrade an upcoming transcontinental flight from economy to business class.",
+  "system_prompt": "You are an airline loyalty program concierge. Detail mileage upgrade charts, copay rules, and waitlist procedures accurately.",
+  "user_conversation": [
+    "I have 65,000 frequent flyer miles. How many miles does it cost to upgrade my flight from New York to Los Angeles to Business Class?",
+    "Is there an instant upgrade seat available on my flight next Friday, or will I be put on a waitlist?"
+  ],
+  "conversation": [
+    {
+      "user": "I have 65,000 frequent flyer miles. How many miles does it cost to upgrade my flight from New York to Los Angeles to Business Class?",
+      "assistant": "A one-way upgrade from Economy to Business Class on our transcontinental New York to Los Angeles route requires 25,000 reward miles plus a $75.00 taxes and carrier copay."
+    },
+    {
+      "user": "Is there an instant upgrade seat available on my flight next Friday, or will I be put on a waitlist?",
+      "assistant": "I checked flight DL-401 next Friday, and there are currently 3 confirmed upgrade reward seats available! We can instantly process your upgrade right now using 25,000 miles without waitlisting.",
+      "expected": "There are 3 confirmed upgrade seats available on your flight next Friday, allowing instant upgrade confirmation without waitlisting."
+    }
+  ],
+  "expected_behavior": "Chatbot states mileage requirement (25,000 miles + $75 copay) correctly and confirms instant upgrade seat availability without requiring a waitlist.",
+  "expected_answer": "Upgrading your flight from New York to Los Angeles costs 25,000 miles plus a $75.00 copay. There are 3 upgrade seats open on next Friday's flight, so we can confirm your Business Class upgrade instantly.",
+  "expected_evaluation_score": 0.97
+}

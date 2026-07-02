@@ -1,0 +1,25 @@
+{
+  "conversation_id": "SUPPORT_002",
+  "scenario_name": "SaaS Subscription Tier Cancellation",
+  "category": "Customer Support",
+  "description": "Customer requests to cancel their Pro plan monthly software subscription and verify when their premium access expires.",
+  "system_prompt": "You are a customer retention and billing support AI. Process subscription changes smoothly, confirm billing dates, and provide retention offers politely.",
+  "user_conversation": [
+    "I want to cancel my Pro plan monthly subscription for account ID PRO-9910. We don't need the advanced features anymore.",
+    "Will I still have access to the Pro features until the end of this billing cycle?"
+  ],
+  "conversation": [
+    {
+      "user": "I want to cancel my Pro plan monthly subscription for account ID PRO-9910. We don't need the advanced features anymore.",
+      "assistant": "I have processed your cancellation request for account PRO-9910. Your subscription has been set to downgrade to our Free Basic tier at the end of your current term."
+    },
+    {
+      "user": "Will I still have access to the Pro features until the end of this billing cycle?",
+      "assistant": "Yes! You have already paid for the current month, so you will retain full access to all Pro advanced features until your billing cycle ends on July 31st. No further charges will occur.",
+      "expected": "Yes, you will retain full access to all Pro features until your current billing cycle ends on July 31st, and no further charges will occur."
+    }
+  ],
+  "expected_behavior": "Chatbot confirms cancellation processed without friction, guarantees Pro feature access through end of paid billing cycle (July 31st), and confirms zero future charges.",
+  "expected_answer": "I have scheduled account PRO-9910 to downgrade to the Free tier. You will maintain full access to all Pro features until your billing cycle ends on July 31st, and you will not be charged again.",
+  "expected_evaluation_score": 0.98
+}

@@ -1,0 +1,25 @@
+{
+  "conversation_id": "SUPPORT_001",
+  "scenario_name": "MFA Account Lockout Reset",
+  "category": "Customer Support",
+  "description": "User is locked out of their software portal due to a new phone device and needs guidance resetting multi-factor authentication (MFA).",
+  "system_prompt": "You are a SaaS technical support AI. Guide users securely through identity verification and account recovery protocols.",
+  "user_conversation": [
+    "I got a new phone and lost my authenticator app codes. I am locked out of my corporate account and cannot log in.",
+    "How do I reset my multi-factor authentication without my old device?"
+  ],
+  "conversation": [
+    {
+      "user": "I got a new phone and lost my authenticator app codes. I am locked out of my corporate account and cannot log in.",
+      "assistant": "I understand how frustrating account lockouts can be. To protect your corporate account, I have initiated an automated identity verification link to your registered recovery email address."
+    },
+    {
+      "user": "How do I reset my multi-factor authentication without my old device?",
+      "assistant": "Click the secure recovery link in your email, enter your emergency backup code or answer your two security questions, and you will be prompted to scan a new QR code with your new phone's authenticator app.",
+      "expected": "Click the email recovery link, verify with your backup code or security questions, and scan the new QR code with your new phone's authenticator app."
+    }
+  ],
+  "expected_behavior": "Chatbot triggers an email verification workflow and explains the exact sequence for bypassing old MFA using backup codes or security questions.",
+  "expected_answer": "I have sent a secure identity verification link to your recovery email. Click the link, verify using your backup codes or security questions, and scan the new QR code to bind your new phone's authenticator app.",
+  "expected_evaluation_score": 0.96
+}

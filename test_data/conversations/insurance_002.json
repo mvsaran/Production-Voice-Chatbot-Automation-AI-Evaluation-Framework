@@ -1,0 +1,25 @@
+{
+  "conversation_id": "INSURANCE_002",
+  "scenario_name": "Emergency Roadside Dispatch",
+  "category": "Insurance",
+  "description": "Driver is stranded on a highway shoulder with a blown tire and requests immediate emergency roadside tow and tire change service.",
+  "system_prompt": "You are an emergency roadside dispatch AI. Confirm location safety, dispatch towing/repair partners swiftly, and provide estimated arrival times.",
+  "user_conversation": [
+    "I am stranded on Interstate 95 North near exit 14 with a flat tire. I need roadside assistance right away.",
+    "How long will it take for the service technician to reach my location?"
+  ],
+  "conversation": [
+    {
+      "user": "I am stranded on Interstate 95 North near exit 14 with a flat tire. I need roadside assistance right away.",
+      "assistant": "Please ensure your hazard lights are on and you are waiting in a safe location away from traffic. I have dispatched our roadside partner, Express Towing, to I-95 North near exit 14 under dispatch ID RD-4412."
+    },
+    {
+      "user": "How long will it take for the service technician to reach my location?",
+      "assistant": "Express Towing has confirmed your location and estimates their technician will arrive in approximately 25 minutes. You will receive live GPS tracking via SMS.",
+      "expected": "Express Towing estimates arrival in approximately 25 minutes, and you will receive live GPS tracking via SMS."
+    }
+  ],
+  "expected_behavior": "Chatbot confirms driver safety instructions, initiates tow dispatch with a reference ID, states estimated ETA (25 mins), and mentions SMS tracking.",
+  "expected_answer": "I have dispatched Express Towing (ID RD-4412) to your location on I-95 North near exit 14. A technician is estimated to arrive in 25 minutes, and you will receive live GPS tracking via SMS.",
+  "expected_evaluation_score": 0.96
+}

@@ -1,0 +1,25 @@
+{
+  "conversation_id": "BANKING_003",
+  "scenario_name": "International Wire Transfer Fee Inquiry",
+  "category": "Banking",
+  "description": "User asks about daily transfer limits, processing times, and fees for sending an outbound international wire transfer in Euros.",
+  "system_prompt": "You are an international banking specialist. Provide precise fee schedules, cutoff times, and currency transfer rules.",
+  "user_conversation": [
+    "What is the fee and cutoff time for sending an international wire transfer to Germany in Euros?",
+    "What is my daily online wire transfer limit as a premier account holder?"
+  ],
+  "conversation": [
+    {
+      "user": "What is the fee and cutoff time for sending an international wire transfer to Germany in Euros?",
+      "assistant": "For international wire transfers sent in foreign currency like Euros, our transfer fee is $35.00, and the daily processing cutoff time is 4:00 PM Eastern Time."
+    },
+    {
+      "user": "What is my daily online wire transfer limit as a premier account holder?",
+      "assistant": "As a Premier Banking account holder, your online outbound wire transfer limit is $50,000 per business day. Amounts above that require branch authorization.",
+      "expected": "As a Premier Banking account holder, your online outbound wire transfer limit is $50,000 per business day."
+    }
+  ],
+  "expected_behavior": "Chatbot provides exact wire transfer fee ($35), cutoff time (4:00 PM EST), and premier daily limit ($50,000) without ambiguity.",
+  "expected_answer": "The fee for sending an international wire transfer in Euros is $35.00 with a 4:00 PM EST cutoff time, and your Premier daily online limit is $50,000.",
+  "expected_evaluation_score": 0.95
+}

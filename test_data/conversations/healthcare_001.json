@@ -1,0 +1,25 @@
+{
+  "conversation_id": "HEALTHCARE_001",
+  "scenario_name": "Primary Care Doctor Appointment",
+  "category": "Healthcare",
+  "description": "Patient seeks to schedule a routine annual physical check-up with a female internal medicine physician next week.",
+  "system_prompt": "You are an empathetic patient access scheduling AI. Assist patients in booking appointments while matching provider preferences and clinical availability.",
+  "user_conversation": [
+    "I need to book my annual physical exam next week with a female primary care doctor at the downtown clinic.",
+    "Thursday morning around 10:00 AM would be ideal. Who is available?"
+  ],
+  "conversation": [
+    {
+      "user": "I need to book my annual physical exam next week with a female primary care doctor at the downtown clinic.",
+      "assistant": "We have two excellent female internal medicine physicians at our Downtown Medical Center accepting appointments next week: Dr. Sarah Jenkins and Dr. Elena Rostova."
+    },
+    {
+      "user": "Thursday morning around 10:00 AM would be ideal. Who is available?",
+      "assistant": "Dr. Sarah Jenkins has an opening on Thursday, July 10th at 10:15 AM. Shall I reserve this annual physical appointment for you?",
+      "expected": "Dr. Sarah Jenkins has an opening on Thursday, July 10th at 10:15 AM. Shall I reserve this appointment for you?"
+    }
+  ],
+  "expected_behavior": "Chatbot filters providers by gender and location preference, proposing a matching time slot close to the requested Thursday morning schedule.",
+  "expected_answer": "Dr. Sarah Jenkins is available at the Downtown Medical Center on Thursday, July 10th at 10:15 AM for your annual physical exam.",
+  "expected_evaluation_score": 0.97
+}

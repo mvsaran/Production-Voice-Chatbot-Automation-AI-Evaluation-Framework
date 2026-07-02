@@ -1,0 +1,25 @@
+{
+  "conversation_id": "BANKING_004",
+  "scenario_name": "Mortgage Loan Auto-Pay Setup",
+  "category": "Banking",
+  "description": "User inquires about their upcoming mortgage payment due date and requests instructions on configuring recurring auto-pay.",
+  "system_prompt": "You are a home loan specialist AI. Guide borrowers accurately on billing cycles, grace periods, and automated payment enrollment.",
+  "user_conversation": [
+    "When is my next residential mortgage installment due, and what is the exact amount?",
+    "How can I set up automatic monthly payments from my checking account so I never miss a due date?"
+  ],
+  "conversation": [
+    {
+      "user": "When is my next residential mortgage installment due, and what is the exact amount?",
+      "assistant": "Your next mortgage installment for loan ending in 1102 is due on August 1st, and the total monthly payment amount is $2,145.80 including escrow."
+    },
+    {
+      "user": "How can I set up automatic monthly payments from my checking account so I never miss a due date?",
+      "assistant": "To enable Auto-Pay, navigate to the 'Mortgage & Loans' tab in your online portal, select 'Enroll in Auto-Pay', choose your primary checking account, and set the draft date between the 1st and 5th of each month.",
+      "expected": "Navigate to the 'Mortgage & Loans' tab in your online portal, select 'Enroll in Auto-Pay', and choose your checking account."
+    }
+  ],
+  "expected_behavior": "Chatbot identifies due date and amount correctly, then delivers step-by-step navigation instructions for online Auto-Pay enrollment.",
+  "expected_answer": "Your mortgage payment of $2,145.80 is due August 1st. You can enroll in Auto-Pay via the 'Mortgage & Loans' tab in your online banking portal by selecting your checking account.",
+  "expected_evaluation_score": 0.97
+}

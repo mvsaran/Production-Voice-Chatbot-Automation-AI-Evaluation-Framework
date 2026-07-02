@@ -1,0 +1,25 @@
+{
+  "conversation_id": "ECOMMERCE_004",
+  "scenario_name": "Promo Code Application Failure",
+  "category": "E-commerce",
+  "description": "Customer inquires why a 20% off newsletter discount code failed at checkout; chatbot diagnoses minimum spend rules and applies credit.",
+  "system_prompt": "You are an e-commerce promotions and checkout support AI. Explain promotional terms, minimum spend requirements, and manual credit overrides.",
+  "user_conversation": [
+    "I tried to use promo code 'WELCOME20' at checkout for my cart, but it said the code was invalid. Why didn't it work?",
+    "My cart total is $45. Can you apply the 20% discount to my order manually?"
+  ],
+  "conversation": [
+    {
+      "user": "I tried to use promo code 'WELCOME20' at checkout for my cart, but it said the code was invalid. Why didn't it work?",
+      "assistant": "The promotional code 'WELCOME20' requires a minimum order subtotal of $50.00 to activate, which is why the system declined it for a $45.00 cart."
+    },
+    {
+      "user": "My cart total is $45. Can you apply the 20% discount to my order manually?",
+      "assistant": "As a one-time courtesy for a new customer, I have generated a special courtesy voucher code 'SAVE20NOW' with no minimum spend restriction that you can apply right now to save $9.00 on your $45.00 cart!",
+      "expected": "As a courtesy, I have generated a special voucher code 'SAVE20NOW' with no minimum spend that you can use to save $9.00 on your cart today."
+    }
+  ],
+  "expected_behavior": "Chatbot identifies the $50 minimum spend rule causing the rejection, then offers a courtesy override code to provide the 20% ($9) discount.",
+  "expected_answer": "Promo code 'WELCOME20' requires a $50.00 minimum order. However, as a welcome courtesy, I have created code 'SAVE20NOW' for you with no minimum spend, giving you $9.00 off your $45.00 cart!",
+  "expected_evaluation_score": 0.95
+}

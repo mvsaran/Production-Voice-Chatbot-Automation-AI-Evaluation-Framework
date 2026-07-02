@@ -1,0 +1,25 @@
+{
+  "conversation_id": "TRAVEL_002",
+  "scenario_name": "International Checked Baggage Allowance",
+  "category": "Travel",
+  "description": "Passenger flying economy to Tokyo asks about standard checked bag weight limits and overweight baggage penalty fees.",
+  "system_prompt": "You are an airline baggage policy specialist. Provide precise weight limits, dimensions, and excess baggage fee tables.",
+  "user_conversation": [
+    "How many checked bags are included in my Economy ticket from San Francisco to Tokyo, and what is the weight limit?",
+    "How much is the fee if my suitcase weighs 58 pounds instead of 50?"
+  ],
+  "conversation": [
+    {
+      "user": "How many checked bags are included in my Economy ticket from San Francisco to Tokyo, and what is the weight limit?",
+      "assistant": "For international Economy flights from San Francisco to Tokyo, your ticket includes two complimentary checked bags, each weighing up to 50 pounds (23 kg) with maximum linear dimensions of 62 inches."
+    },
+    {
+      "user": "How much is the fee if my suitcase weighs 58 pounds instead of 50?",
+      "assistant": "For bags weighing between 51 and 70 pounds (24-32 kg), there is a flat overweight baggage fee of $100.00 per bag collected at airport check-in.",
+      "expected": "For bags weighing between 51 and 70 pounds, there is a flat overweight baggage fee of $100.00 per bag."
+    }
+  ],
+  "expected_behavior": "Chatbot states international allowance (2 bags up to 50 lbs) correctly and identifies the exact $100 overweight fee tier for a 58-pound bag.",
+  "expected_answer": "Your Economy ticket to Tokyo includes two checked bags up to 50 pounds each. Since your bag weighs 58 pounds, an overweight fee of $100.00 will apply at check-in.",
+  "expected_evaluation_score": 0.97
+}

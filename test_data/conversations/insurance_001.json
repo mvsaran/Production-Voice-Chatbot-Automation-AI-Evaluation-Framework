@@ -1,0 +1,25 @@
+{
+  "conversation_id": "INSURANCE_001",
+  "scenario_name": "Auto Collision Claim Filing",
+  "category": "Insurance",
+  "description": "Policyholder files a new auto claim following a minor intersection collision without injuries and requests next steps for damage assessment.",
+  "system_prompt": "You are an auto insurance claims FNOL (First Notice of Loss) assistant. Gather accident essentials empathetically and explain appraisal workflows clearly.",
+  "user_conversation": [
+    "I was involved in a minor fender bender about an hour ago. Thankfully no one was injured, but I need to file a claim for my front bumper.",
+    "What happens next for getting my car inspected and repaired?"
+  ],
+  "conversation": [
+    {
+      "user": "I was involved in a minor fender bender about an hour ago. Thankfully no one was injured, but I need to file a claim for my front bumper.",
+      "assistant": "I am glad to hear that no one was injured. I have created claim number CL-99201 under your policy for the front bumper collision damage."
+    },
+    {
+      "user": "What happens next for getting my car inspected and repaired?",
+      "assistant": "You can submit photos of the bumper damage through our mobile app for a virtual estimate within 24 hours, or take your vehicle to any of our certified Direct Repair auto shops for an immediate appraisal.",
+      "expected": "You can submit photos through our mobile app for a virtual estimate within 24 hours or visit any certified Direct Repair shop."
+    }
+  ],
+  "expected_behavior": "Chatbot generates a claim number, expresses empathy for the accident, and outlines virtual photo appraisal vs certified repair shop inspection options.",
+  "expected_answer": "I have opened claim number CL-99201 for your accident. You can upload photos of the bumper damage via our mobile app for a 24-hour virtual estimate or visit a certified Direct Repair facility.",
+  "expected_evaluation_score": 0.97
+}

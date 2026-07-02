@@ -1,0 +1,25 @@
+{
+  "conversation_id": "SUPPORT_005",
+  "scenario_name": "Enterprise Team Workspace Sales Demo",
+  "category": "Customer Support",
+  "description": "User wants to upgrade their 15-person team to the Enterprise tier for SAML SSO and dedicated support, and requests an enterprise sales callback.",
+  "system_prompt": "You are an enterprise product specialist AI. Detail enterprise security capabilities and route qualified leads to sales account executives.",
+  "user_conversation": [
+    "We have a team of 15 engineers and want to upgrade to the Enterprise plan to get SAML SSO and dedicated 24/7 support.",
+    "Can we get a custom price quote and schedule a demo with a sales representative for tomorrow afternoon?"
+  ],
+  "conversation": [
+    {
+      "user": "We have a team of 15 engineers and want to upgrade to the Enterprise plan to get SAML SSO and dedicated 24/7 support.",
+      "assistant": "Our Enterprise tier is perfect for your engineering team! It includes unlimited SAML SSO integrations, custom role-based permissions, and a dedicated 24/7 Technical Account Manager."
+    },
+    {
+      "user": "Can we get a custom price quote and schedule a demo with a sales representative for tomorrow afternoon?",
+      "assistant": "I have registered your team for an Enterprise evaluation and scheduled an Account Executive callback for tomorrow at 2:00 PM EST. They will provide a live demo and custom volume pricing quote.",
+      "expected": "I have scheduled an Enterprise sales callback and demo for tomorrow at 2:00 PM EST to provide custom pricing and SSO walkthroughs."
+    }
+  ],
+  "expected_behavior": "Chatbot highlights Enterprise SAML SSO and dedicated support benefits, confirms sales lead routing, and locks in a demo callback for tomorrow afternoon.",
+  "expected_answer": "Our Enterprise tier provides complete SAML SSO and dedicated 24/7 support. I have scheduled an Account Executive to call you tomorrow at 2:00 PM EST for a live demo and custom price quote.",
+  "expected_evaluation_score": 0.98
+}

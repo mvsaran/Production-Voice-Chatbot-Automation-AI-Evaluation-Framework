@@ -1,0 +1,25 @@
+{
+  "conversation_id": "ECOMMERCE_005",
+  "scenario_name": "Out-of-Stock SMS Restock Alert",
+  "category": "E-commerce",
+  "description": "Customer wants to buy a pair of running shoes currently sold out in size 10.5 and requests an automated SMS notification upon restock.",
+  "system_prompt": "You are an e-commerce inventory and restock notification AI. Check warehouse inbound schedules and configure automated customer alerts.",
+  "user_conversation": [
+    "The Apex Pro running shoes in Blue size 10.5 are out of stock. Do you know when you will get more in?",
+    "Can you set up a text message alert to my phone number ending in 4432 as soon as they are restocked?"
+  ],
+  "conversation": [
+    {
+      "user": "The Apex Pro running shoes in Blue size 10.5 are out of stock. Do you know when you will get more in?",
+      "assistant": "Our inventory shipment schedule shows that we are receiving a fresh warehouse restock of the Apex Pro running shoes in Blue size 10.5 next Friday, July 11th."
+    },
+    {
+      "user": "Can you set up a text message alert to my phone number ending in 4432 as soon as they are restocked?",
+      "assistant": "I have registered a high-priority SMS restock notification for phone number ending in 4432. You will receive an instant text message with a direct 1-click checkout link the moment size 10.5 is checked into our inventory.",
+      "expected": "I have registered an SMS restock alert for phone ending in 4432 to send you an instant text with a checkout link as soon as size 10.5 arrives."
+    }
+  ],
+  "expected_behavior": "Chatbot states expected inventory arrival date (July 11th) and confirms SMS restock notification enrollment with 1-click checkout link.",
+  "expected_answer": "The Apex Pro running shoes in Blue size 10.5 are scheduled for restock on Friday, July 11th. I have enrolled your phone ending in 4432 for an instant SMS alert with a checkout link the moment they arrive.",
+  "expected_evaluation_score": 0.97
+}

@@ -1,0 +1,25 @@
+{
+  "conversation_id": "INSURANCE_003",
+  "scenario_name": "Collision Deductible Adjustment",
+  "category": "Insurance",
+  "description": "Policyholder asks about their current auto collision deductible and inquires how raising it to $1,000 affects their semi-annual premium.",
+  "system_prompt": "You are a policy servicing AI consultant. Provide accurate deductible configurations and calculate premium savings clearly.",
+  "user_conversation": [
+    "What is my current collision deductible on my 2022 Honda Accord?",
+    "If I increase my collision deductible from $500 to $1,000, how much will I save on my 6-month premium?"
+  ],
+  "conversation": [
+    {
+      "user": "What is my current collision deductible on my 2022 Honda Accord?",
+      "assistant": "Your current collision coverage deductible for the 2022 Honda Accord is set at $500.00."
+    },
+    {
+      "user": "If I increase my collision deductible from $500 to $1,000, how much will I save on my 6-month premium?",
+      "assistant": "Increasing your collision deductible from $500 to $1,000 will reduce your semi-annual policy premium by $85.00, lowering your total 6-month rate from $740.00 to $655.00.",
+      "expected": "Increasing your collision deductible from $500 to $1,000 will reduce your semi-annual premium by $85.00."
+    }
+  ],
+  "expected_behavior": "Chatbot states current $500 deductible accurately and calculates the exact premium reduction ($85 semi-annually) resulting from a deductible increase.",
+  "expected_answer": "Your current collision deductible is $500.00. Increasing it to $1,000.00 will save you $85.00 on your semi-annual premium, lowering your 6-month rate to $655.00.",
+  "expected_evaluation_score": 0.98
+}

@@ -1,0 +1,25 @@
+{
+  "conversation_id": "INSURANCE_005",
+  "scenario_name": "Adding Teenage Driver to Policy",
+  "category": "Insurance",
+  "description": "Parent requests information on adding a newly licensed 16-year-old child to their family auto policy and asks about good student discount eligibility.",
+  "system_prompt": "You are an auto insurance endorsement specialist. Guide policyholders on driver additions, underwriting requirements, and student discount verification.",
+  "user_conversation": [
+    "My daughter just passed her driving test and got her driver's license today. How do I add her to our auto policy?",
+    "She has a 3.8 GPA in high school. Can we get a discount for her good grades?"
+  ],
+  "conversation": [
+    {
+      "user": "My daughter just passed her driving test and got her driver's license today. How do I add her to our auto policy?",
+      "assistant": "Congratulations to your daughter! To add her as a listed driver, I will need her full legal name, date of birth, and her new driver's license number. We can add her effective immediately today."
+    },
+    {
+      "user": "She has a 3.8 GPA in high school. Can we get a discount for her good grades?",
+      "assistant": "Absolutely! With a 3.8 GPA, she qualifies for our Good Student Discount, which provides a 15% savings on her driver coverage. Simply upload a copy of her latest official report card or transcript to your account portal.",
+      "expected": "Yes! She qualifies for our Good Student Discount (15% savings) by uploading a copy of her recent report card or transcript to your portal."
+    }
+  ],
+  "expected_behavior": "Chatbot outlines required driver details (name, DOB, license number) and confirms Good Student Discount eligibility (15% savings) with simple transcript documentation.",
+  "expected_answer": "We can add your daughter immediately with her full name, date of birth, and license number. Her 3.8 GPA qualifies her for our Good Student Discount, saving 15% on her coverage upon uploading her recent transcript.",
+  "expected_evaluation_score": 0.97
+}

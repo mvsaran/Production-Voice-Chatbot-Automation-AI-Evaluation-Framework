@@ -1,0 +1,752 @@
+[
+  {
+    "conversation_id": "BANKING_001",
+    "scenario_name": "Checking Account Balance Inquiry",
+    "category": "Banking",
+    "description": "User inquires about their checking account balance and recent transactions; chatbot should provide accurate financial summaries after verifying account context.",
+    "system_prompt": "You are a secure AI banking assistant. Provide clear, professional financial information while maintaining privacy and accuracy.",
+    "user_conversation": [
+      "Hi, I would like to check the current balance on my primary checking account.",
+      "Can you also tell me the amount and date of my most recent posted transaction?"
+    ],
+    "conversation": [
+      {
+        "user": "Hi, I would like to check the current balance on my primary checking account.",
+        "assistant": "Hello! I can certainly help you with your account summary. Your primary checking account ending in 4321 has a current available balance of $4,850.25."
+      },
+      {
+        "user": "Can you also tell me the amount and date of my most recent posted transaction?",
+        "assistant": "Your most recent posted transaction was a debit of $64.30 at Whole Foods Market on July 1st.",
+        "expected": "Your most recent posted transaction was a debit of $64.30 at Whole Foods Market on July 1st."
+      }
+    ],
+    "expected_behavior": "Chatbot correctly identifies the checking account balance and states the exact date and amount of the last transaction in a concise, professional tone.",
+    "expected_answer": "Your primary checking account ending in 4321 has a current available balance of $4,850.25, and your most recent posted transaction was a debit of $64.30 at Whole Foods Market on July 1st.",
+    "expected_evaluation_score": 0.98
+  },
+  {
+    "conversation_id": "BANKING_002",
+    "scenario_name": "Emergency Debit Card Freeze",
+    "category": "Banking",
+    "description": "User reports a misplaced debit card and requests an immediate temporary freeze; chatbot must prioritize security and confirm card lock status.",
+    "system_prompt": "You are an emergency banking security assistant. Handle lost or stolen card reports urgently, empathetically, and clearly.",
+    "user_conversation": [
+      "I think I left my debit card at a restaurant and need to freeze it immediately.",
+      "Will any recurring automatic bill payments be blocked while the card is frozen?"
+    ],
+    "conversation": [
+      {
+        "user": "I think I left my debit card at a restaurant and need to freeze it immediately.",
+        "assistant": "I understand your concern and have immediately applied a temporary security freeze on your debit card ending in 8890. No new purchases or ATM withdrawals can be made."
+      },
+      {
+        "user": "Will any recurring automatic bill payments be blocked while the card is frozen?",
+        "assistant": "Recurring ACH transfers and account-level routing deductions will continue normally, but subscription charges directly tied to the 16-digit debit card number will be temporarily declined.",
+        "expected": "Recurring ACH transfers will continue, but subscription charges tied to the 16-digit card number will be temporarily declined."
+      }
+    ],
+    "expected_behavior": "Chatbot immediately confirms card lock applied to prevent unauthorized use and clearly distinguishes between ACH payments and card-based subscriptions.",
+    "expected_answer": "I have placed a temporary security freeze on your debit card ending in 8890. ACH account payments will continue normally, but card-billed subscriptions will be temporarily declined.",
+    "expected_evaluation_score": 0.96
+  },
+  {
+    "conversation_id": "BANKING_003",
+    "scenario_name": "International Wire Transfer Fee Inquiry",
+    "category": "Banking",
+    "description": "User asks about daily transfer limits, processing times, and fees for sending an outbound international wire transfer in Euros.",
+    "system_prompt": "You are an international banking specialist. Provide precise fee schedules, cutoff times, and currency transfer rules.",
+    "user_conversation": [
+      "What is the fee and cutoff time for sending an international wire transfer to Germany in Euros?",
+      "What is my daily online wire transfer limit as a premier account holder?"
+    ],
+    "conversation": [
+      {
+        "user": "What is the fee and cutoff time for sending an international wire transfer to Germany in Euros?",
+        "assistant": "For international wire transfers sent in foreign currency like Euros, our transfer fee is $35.00, and the daily processing cutoff time is 4:00 PM Eastern Time."
+      },
+      {
+        "user": "What is my daily online wire transfer limit as a premier account holder?",
+        "assistant": "As a Premier Banking account holder, your online outbound wire transfer limit is $50,000 per business day. Amounts above that require branch authorization.",
+        "expected": "As a Premier Banking account holder, your online outbound wire transfer limit is $50,000 per business day."
+      }
+    ],
+    "expected_behavior": "Chatbot provides exact wire transfer fee ($35), cutoff time (4:00 PM EST), and premier daily limit ($50,000) without ambiguity.",
+    "expected_answer": "The fee for sending an international wire transfer in Euros is $35.00 with a 4:00 PM EST cutoff time, and your Premier daily online limit is $50,000.",
+    "expected_evaluation_score": 0.95
+  },
+  {
+    "conversation_id": "BANKING_004",
+    "scenario_name": "Mortgage Loan Auto-Pay Setup",
+    "category": "Banking",
+    "description": "User inquires about their upcoming mortgage payment due date and requests instructions on configuring recurring auto-pay.",
+    "system_prompt": "You are a home loan specialist AI. Guide borrowers accurately on billing cycles, grace periods, and automated payment enrollment.",
+    "user_conversation": [
+      "When is my next residential mortgage installment due, and what is the exact amount?",
+      "How can I set up automatic monthly payments from my checking account so I never miss a due date?"
+    ],
+    "conversation": [
+      {
+        "user": "When is my next residential mortgage installment due, and what is the exact amount?",
+        "assistant": "Your next mortgage installment for loan ending in 1102 is due on August 1st, and the total monthly payment amount is $2,145.80 including escrow."
+      },
+      {
+        "user": "How can I set up automatic monthly payments from my checking account so I never miss a due date?",
+        "assistant": "To enable Auto-Pay, navigate to the 'Mortgage & Loans' tab in your online portal, select 'Enroll in Auto-Pay', choose your primary checking account, and set the draft date between the 1st and 5th of each month.",
+        "expected": "Navigate to the 'Mortgage & Loans' tab in your online portal, select 'Enroll in Auto-Pay', and choose your checking account."
+      }
+    ],
+    "expected_behavior": "Chatbot identifies due date and amount correctly, then delivers step-by-step navigation instructions for online Auto-Pay enrollment.",
+    "expected_answer": "Your mortgage payment of $2,145.80 is due August 1st. You can enroll in Auto-Pay via the 'Mortgage & Loans' tab in your online banking portal by selecting your checking account.",
+    "expected_evaluation_score": 0.97
+  },
+  {
+    "conversation_id": "BANKING_005",
+    "scenario_name": "Unrecognized Charge Dispute",
+    "category": "Banking",
+    "description": "User notices an unfamiliar online transaction on their credit card statement and wishes to initiate a formal billing dispute.",
+    "system_prompt": "You are a credit card dispute resolution assistant. Explain dispute timelines, provisional credits, and necessary cardholder actions.",
+    "user_conversation": [
+      "I see an unknown charge of $129.99 from 'TechCloud Solutions' on my credit card statement yesterday that I did not authorize.",
+      "How long does the dispute investigation take, and will I receive a temporary credit?"
+    ],
+    "conversation": [
+      {
+        "user": "I see an unknown charge of $129.99 from 'TechCloud Solutions' on my credit card statement yesterday that I did not authorize.",
+        "assistant": "I am sorry to hear about this unauthorized charge. I have initiated a formal dispute for the $129.99 transaction from TechCloud Solutions and blocked the merchant from further billing."
+      },
+      {
+        "user": "How long does the dispute investigation take, and will I receive a temporary credit?",
+        "assistant": "We will issue a temporary provisional credit of $129.99 to your account within 2 business days. The full merchant investigation typically concludes within 30 to 45 days.",
+        "expected": "We will issue a temporary provisional credit of $129.99 within 2 business days, and the investigation takes 30 to 45 days."
+      }
+    ],
+    "expected_behavior": "Chatbot confirms initiation of dispute for the exact merchant and amount, and clearly communicates the 2-day provisional credit timeline and 30-45 day investigation window.",
+    "expected_answer": "I have initiated a dispute for the $129.99 charge from TechCloud Solutions. A provisional credit will be applied within 2 business days while the 30 to 45 day investigation is completed.",
+    "expected_evaluation_score": 0.96
+  },
+  {
+    "conversation_id": "HEALTHCARE_001",
+    "scenario_name": "Primary Care Doctor Appointment",
+    "category": "Healthcare",
+    "description": "Patient seeks to schedule a routine annual physical check-up with a female internal medicine physician next week.",
+    "system_prompt": "You are an empathetic patient access scheduling AI. Assist patients in booking appointments while matching provider preferences and clinical availability.",
+    "user_conversation": [
+      "I need to book my annual physical exam next week with a female primary care doctor at the downtown clinic.",
+      "Thursday morning around 10:00 AM would be ideal. Who is available?"
+    ],
+    "conversation": [
+      {
+        "user": "I need to book my annual physical exam next week with a female primary care doctor at the downtown clinic.",
+        "assistant": "We have two excellent female internal medicine physicians at our Downtown Medical Center accepting appointments next week: Dr. Sarah Jenkins and Dr. Elena Rostova."
+      },
+      {
+        "user": "Thursday morning around 10:00 AM would be ideal. Who is available?",
+        "assistant": "Dr. Sarah Jenkins has an opening on Thursday, July 10th at 10:15 AM. Shall I reserve this annual physical appointment for you?",
+        "expected": "Dr. Sarah Jenkins has an opening on Thursday, July 10th at 10:15 AM. Shall I reserve this appointment for you?"
+      }
+    ],
+    "expected_behavior": "Chatbot filters providers by gender and location preference, proposing a matching time slot close to the requested Thursday morning schedule.",
+    "expected_answer": "Dr. Sarah Jenkins is available at the Downtown Medical Center on Thursday, July 10th at 10:15 AM for your annual physical exam.",
+    "expected_evaluation_score": 0.97
+  },
+  {
+    "conversation_id": "HEALTHCARE_002",
+    "scenario_name": "Prescription Refill Request",
+    "category": "Healthcare",
+    "description": "Patient requests a 30-day prescription refill for Lisinopril and confirms transmission to their preferred neighborhood pharmacy.",
+    "system_prompt": "You are a clinical pharmacy support assistant. Validate medication names, dosage frequencies, and pharmacy routing safely.",
+    "user_conversation": [
+      "I am running low on my 20mg Lisinopril blood pressure medication and need a refill sent to my pharmacy.",
+      "Please send it to the CVS Pharmacy on Corner Street in Austin."
+    ],
+    "conversation": [
+      {
+        "user": "I am running low on my 20mg Lisinopril blood pressure medication and need a refill sent to my pharmacy.",
+        "assistant": "I can assist you with your medication refill. I see your active prescription for Lisinopril 20mg oral tablet, once daily, prescribed by Dr. Adams."
+      },
+      {
+        "user": "Please send it to the CVS Pharmacy on Corner Street in Austin.",
+        "assistant": "Your refill electronic renewal request for Lisinopril 20mg has been transmitted to CVS Pharmacy on Corner Street in Austin. It should be ready for pickup by 4:00 PM today.",
+        "expected": "Your refill request for Lisinopril 20mg has been transmitted to CVS Pharmacy on Corner Street in Austin and should be ready by 4:00 PM."
+      }
+    ],
+    "expected_behavior": "Chatbot verifies dosage and drug name, transmits renewal to the requested pharmacy location, and provides an expected pickup timeframe.",
+    "expected_answer": "Your 30-day prescription refill for Lisinopril 20mg has been electronically sent to CVS Pharmacy on Corner Street in Austin and will be ready by 4:00 PM.",
+    "expected_evaluation_score": 0.98
+  },
+  {
+    "conversation_id": "HEALTHCARE_003",
+    "scenario_name": "Mild Fever Clinical Triage",
+    "category": "Healthcare",
+    "description": "Patient reports symptoms of a moderate fever and sore throat; chatbot must perform nurse triage guidance without diagnosing medical conditions.",
+    "system_prompt": "You are a clinical triage nurse AI. Provide safe, evidence-based self-care guidance and direct patients to appropriate care venues while presenting required medical disclaimers.",
+    "user_conversation": [
+      "I have had a fever of 101.2 and a scratchy sore throat since yesterday evening. Should I go to the emergency room?",
+      "What can I do at home right now to lower the fever safely?"
+    ],
+    "conversation": [
+      {
+        "user": "I have had a fever of 101.2 and a scratchy sore throat since yesterday evening. Should I go to the emergency room?",
+        "assistant": "A fever of 101.2\u00b0F with a sore throat in an otherwise healthy adult generally does not require an emergency room visit unless accompanied by severe shortness of breath or inability to swallow. An urgent care visit or virtual visit is recommended if symptoms persist beyond 3 days."
+      },
+      {
+        "user": "What can I do at home right now to lower the fever safely?",
+        "assistant": "You can stay well-hydrated with water or electrolyte fluids, rest, and take over-the-counter antipyretics like acetaminophen or ibuprofen according to package instructions. Please seek urgent care if your temperature exceeds 103\u00b0F.",
+        "expected": "Stay hydrated, rest, and take over-the-counter fever reducers like acetaminophen or ibuprofen according to package instructions."
+      }
+    ],
+    "expected_behavior": "Chatbot evaluates symptom severity safely, recommends urgent care over ER for non-critical fever, suggests standard hydration/antipyretics, and states clear red-flag warning thresholds.",
+    "expected_answer": "For a fever of 101.2\u00b0F with sore throat, we recommend rest, hydration, and over-the-counter acetaminophen or ibuprofen. Please visit urgent care or an ER immediately if your temperature exceeds 103\u00b0F or if you experience breathing difficulty.",
+    "expected_evaluation_score": 0.95
+  },
+  {
+    "conversation_id": "HEALTHCARE_004",
+    "scenario_name": "Specialist Consultation Copay Check",
+    "category": "Healthcare",
+    "description": "Patient inquires about out-of-pocket copay costs for seeing an orthopedic cardiologist specialist under their Gold PPO health plan.",
+    "system_prompt": "You are a healthcare benefits eligibility assistant. Provide accurate medical copayment, coinsurance, and referral requirements.",
+    "user_conversation": [
+      "I need to see an orthopedic specialist for my knee. What is my consultation copay under my Gold PPO plan?",
+      "Do I need a formal referral from my primary care physician before booking?"
+    ],
+    "conversation": [
+      {
+        "user": "I need to see an orthopedic specialist for my knee. What is my consultation copay under my Gold PPO plan?",
+        "assistant": "Under your active Gold PPO health plan, in-network specialist office visits have a fixed copayment of $45.00 per consultation."
+      },
+      {
+        "user": "Do I need a formal referral from my primary care physician before booking?",
+        "assistant": "No, because you are enrolled in a PPO (Preferred Provider Organization) plan, you do not need a referral from your primary care physician to schedule an in-network orthopedic specialist visit.",
+        "expected": "Because you are enrolled in a PPO plan, you do not need a referral from your primary care physician to see an in-network specialist."
+      }
+    ],
+    "expected_behavior": "Chatbot states the exact specialist copay ($45) and accurately explains that PPO plans do not require a PCP referral for in-network specialist scheduling.",
+    "expected_answer": "Your in-network specialist consultation copay under the Gold PPO plan is $45.00, and no primary care physician referral is required to book your orthopedic appointment.",
+    "expected_evaluation_score": 0.98
+  },
+  {
+    "conversation_id": "HEALTHCARE_005",
+    "scenario_name": "Patient Portal Lab Results Access",
+    "category": "Healthcare",
+    "description": "Patient seeks guidance on finding and viewing recent routine complete blood count (CBC) lab results on the patient web portal.",
+    "system_prompt": "You are a patient portal technical support AI. Provide clear, step-by-step navigation help while respecting HIPAA data security rules.",
+    "user_conversation": [
+      "My doctor said my routine blood test results from Tuesday are ready. How do I view them online?",
+      "Can I download a PDF copy of the lab report to keep for my records?"
+    ],
+    "conversation": [
+      {
+        "user": "My doctor said my routine blood test results from Tuesday are ready. How do I view them online?",
+        "assistant": "To view your blood test results, log into your MyHealth Patient Portal, click on the 'Health Records' menu on the left sidebar, and select 'Lab & Test Results'. Your CBC report from Tuesday is listed at the top."
+      },
+      {
+        "user": "Can I download a PDF copy of the lab report to keep for my records?",
+        "assistant": "Yes! When viewing the specific test report online, click the 'Download PDF' icon in the upper right corner of the screen to save a certified copy for your records.",
+        "expected": "Yes, click the 'Download PDF' icon in the upper right corner of the report screen to save a copy for your records."
+      }
+    ],
+    "expected_behavior": "Chatbot provides precise UI navigation steps to access test results and confirms PDF export capability without reciting actual protected health information.",
+    "expected_answer": "You can view your blood test results by logging into the MyHealth Patient Portal under 'Health Records' > 'Lab & Test Results'. You can download a PDF copy by clicking the icon in the top right corner of the report.",
+    "expected_evaluation_score": 0.96
+  },
+  {
+    "conversation_id": "INSURANCE_001",
+    "scenario_name": "Auto Collision Claim Filing",
+    "category": "Insurance",
+    "description": "Policyholder files a new auto claim following a minor intersection collision without injuries and requests next steps for damage assessment.",
+    "system_prompt": "You are an auto insurance claims FNOL (First Notice of Loss) assistant. Gather accident essentials empathetically and explain appraisal workflows clearly.",
+    "user_conversation": [
+      "I was involved in a minor fender bender about an hour ago. Thankfully no one was injured, but I need to file a claim for my front bumper.",
+      "What happens next for getting my car inspected and repaired?"
+    ],
+    "conversation": [
+      {
+        "user": "I was involved in a minor fender bender about an hour ago. Thankfully no one was injured, but I need to file a claim for my front bumper.",
+        "assistant": "I am glad to hear that no one was injured. I have created claim number CL-99201 under your policy for the front bumper collision damage."
+      },
+      {
+        "user": "What happens next for getting my car inspected and repaired?",
+        "assistant": "You can submit photos of the bumper damage through our mobile app for a virtual estimate within 24 hours, or take your vehicle to any of our certified Direct Repair auto shops for an immediate appraisal.",
+        "expected": "You can submit photos through our mobile app for a virtual estimate within 24 hours or visit any certified Direct Repair shop."
+      }
+    ],
+    "expected_behavior": "Chatbot generates a claim number, expresses empathy for the accident, and outlines virtual photo appraisal vs certified repair shop inspection options.",
+    "expected_answer": "I have opened claim number CL-99201 for your accident. You can upload photos of the bumper damage via our mobile app for a 24-hour virtual estimate or visit a certified Direct Repair facility.",
+    "expected_evaluation_score": 0.97
+  },
+  {
+    "conversation_id": "INSURANCE_002",
+    "scenario_name": "Emergency Roadside Dispatch",
+    "category": "Insurance",
+    "description": "Driver is stranded on a highway shoulder with a blown tire and requests immediate emergency roadside tow and tire change service.",
+    "system_prompt": "You are an emergency roadside dispatch AI. Confirm location safety, dispatch towing/repair partners swiftly, and provide estimated arrival times.",
+    "user_conversation": [
+      "I am stranded on Interstate 95 North near exit 14 with a flat tire. I need roadside assistance right away.",
+      "How long will it take for the service technician to reach my location?"
+    ],
+    "conversation": [
+      {
+        "user": "I am stranded on Interstate 95 North near exit 14 with a flat tire. I need roadside assistance right away.",
+        "assistant": "Please ensure your hazard lights are on and you are waiting in a safe location away from traffic. I have dispatched our roadside partner, Express Towing, to I-95 North near exit 14 under dispatch ID RD-4412."
+      },
+      {
+        "user": "How long will it take for the service technician to reach my location?",
+        "assistant": "Express Towing has confirmed your location and estimates their technician will arrive in approximately 25 minutes. You will receive live GPS tracking via SMS.",
+        "expected": "Express Towing estimates arrival in approximately 25 minutes, and you will receive live GPS tracking via SMS."
+      }
+    ],
+    "expected_behavior": "Chatbot confirms driver safety instructions, initiates tow dispatch with a reference ID, states estimated ETA (25 mins), and mentions SMS tracking.",
+    "expected_answer": "I have dispatched Express Towing (ID RD-4412) to your location on I-95 North near exit 14. A technician is estimated to arrive in 25 minutes, and you will receive live GPS tracking via SMS.",
+    "expected_evaluation_score": 0.96
+  },
+  {
+    "conversation_id": "INSURANCE_003",
+    "scenario_name": "Collision Deductible Adjustment",
+    "category": "Insurance",
+    "description": "Policyholder asks about their current auto collision deductible and inquires how raising it to $1,000 affects their semi-annual premium.",
+    "system_prompt": "You are a policy servicing AI consultant. Provide accurate deductible configurations and calculate premium savings clearly.",
+    "user_conversation": [
+      "What is my current collision deductible on my 2022 Honda Accord?",
+      "If I increase my collision deductible from $500 to $1,000, how much will I save on my 6-month premium?"
+    ],
+    "conversation": [
+      {
+        "user": "What is my current collision deductible on my 2022 Honda Accord?",
+        "assistant": "Your current collision coverage deductible for the 2022 Honda Accord is set at $500.00."
+      },
+      {
+        "user": "If I increase my collision deductible from $500 to $1,000, how much will I save on my 6-month premium?",
+        "assistant": "Increasing your collision deductible from $500 to $1,000 will reduce your semi-annual policy premium by $85.00, lowering your total 6-month rate from $740.00 to $655.00.",
+        "expected": "Increasing your collision deductible from $500 to $1,000 will reduce your semi-annual premium by $85.00."
+      }
+    ],
+    "expected_behavior": "Chatbot states current $500 deductible accurately and calculates the exact premium reduction ($85 semi-annually) resulting from a deductible increase.",
+    "expected_answer": "Your current collision deductible is $500.00. Increasing it to $1,000.00 will save you $85.00 on your semi-annual premium, lowering your 6-month rate to $655.00.",
+    "expected_evaluation_score": 0.98
+  },
+  {
+    "conversation_id": "INSURANCE_004",
+    "scenario_name": "Homeowners Water Damage Coverage",
+    "category": "Insurance",
+    "description": "Homeowner inquires whether interior hardwood floor damage caused by a sudden burst plumbing pipe is covered under their HO-3 property policy.",
+    "system_prompt": "You are a property insurance coverage advisor. Explain policy inclusions and exclusions regarding plumbing discharges and flood waters accurately.",
+    "user_conversation": [
+      "A kitchen pipe suddenly burst this morning and soaked my hardwood floors. Is water damage from a burst plumbing pipe covered by my homeowners policy?",
+      "Does this also cover the cost of a plumber to repair the broken pipe itself?"
+    ],
+    "conversation": [
+      {
+        "user": "A kitchen pipe suddenly burst this morning and soaked my hardwood floors. Is water damage from a burst plumbing pipe covered by my homeowners policy?",
+        "assistant": "Yes, under your standard HO-3 Homeowners policy, sudden and accidental water discharge from a broken internal plumbing pipe is covered for interior damage, including drying and replacing your hardwood floors, subject to your $1,000 deductible."
+      },
+      {
+        "user": "Does this also cover the cost of a plumber to repair the broken pipe itself?",
+        "assistant": "While the policy covers the structural tearing out and replacing of walls or floors necessary to access the plumbing, the actual physical repair or replacement cost of the broken pipe itself is considered home maintenance and is not covered.",
+        "expected": "The policy covers tearing out and replacing floors/walls to access the pipe, but the plumber's repair cost of the broken pipe itself is not covered."
+      }
+    ],
+    "expected_behavior": "Chatbot confirms coverage for sudden water damage to floors while accurately explaining the standard exclusion for repairing the broken pipe component itself.",
+    "expected_answer": "Your HO-3 policy covers the water damage to your hardwood floors from a sudden pipe burst after your deductible. However, the cost of the plumbing repair for the broken pipe itself is considered general maintenance and is not covered.",
+    "expected_evaluation_score": 0.95
+  },
+  {
+    "conversation_id": "INSURANCE_005",
+    "scenario_name": "Adding Teenage Driver to Policy",
+    "category": "Insurance",
+    "description": "Parent requests information on adding a newly licensed 16-year-old child to their family auto policy and asks about good student discount eligibility.",
+    "system_prompt": "You are an auto insurance endorsement specialist. Guide policyholders on driver additions, underwriting requirements, and student discount verification.",
+    "user_conversation": [
+      "My daughter just passed her driving test and got her driver's license today. How do I add her to our auto policy?",
+      "She has a 3.8 GPA in high school. Can we get a discount for her good grades?"
+    ],
+    "conversation": [
+      {
+        "user": "My daughter just passed her driving test and got her driver's license today. How do I add her to our auto policy?",
+        "assistant": "Congratulations to your daughter! To add her as a listed driver, I will need her full legal name, date of birth, and her new driver's license number. We can add her effective immediately today."
+      },
+      {
+        "user": "She has a 3.8 GPA in high school. Can we get a discount for her good grades?",
+        "assistant": "Absolutely! With a 3.8 GPA, she qualifies for our Good Student Discount, which provides a 15% savings on her driver coverage. Simply upload a copy of her latest official report card or transcript to your account portal.",
+        "expected": "Yes! She qualifies for our Good Student Discount (15% savings) by uploading a copy of her recent report card or transcript to your portal."
+      }
+    ],
+    "expected_behavior": "Chatbot outlines required driver details (name, DOB, license number) and confirms Good Student Discount eligibility (15% savings) with simple transcript documentation.",
+    "expected_answer": "We can add your daughter immediately with her full name, date of birth, and license number. Her 3.8 GPA qualifies her for our Good Student Discount, saving 15% on her coverage upon uploading her recent transcript.",
+    "expected_evaluation_score": 0.97
+  },
+  {
+    "conversation_id": "TRAVEL_001",
+    "scenario_name": "Weather Flight Cancellation Rebooking",
+    "category": "Travel",
+    "description": "Traveler's evening flight to Chicago was cancelled due to severe thunderstorms; chatbot must rebook them onto the next morning departure without change fees.",
+    "system_prompt": "You are an airline irregular operations (IROPS) rebooking AI. Assist disrupted passengers swiftly with complimentary seat assignments on alternate departures.",
+    "user_conversation": [
+      "My flight AA-405 to Chicago tonight was just cancelled because of storms. I need to get to Chicago as early as possible tomorrow morning.",
+      "Will I be charged any rebooking fee or fare difference for changing to the morning flight?"
+    ],
+    "conversation": [
+      {
+        "user": "My flight AA-405 to Chicago tonight was just cancelled because of storms. I need to get to Chicago as early as possible tomorrow morning.",
+        "assistant": "I apologize for the disruption caused by the weather. I have confirmed two open seats on flight AA-102 departing tomorrow morning at 6:30 AM, arriving in Chicago at 8:15 AM. Shall I confirm you on this flight?"
+      },
+      {
+        "user": "Will I be charged any rebooking fee or fare difference for changing to the morning flight?",
+        "assistant": "No, because your original flight was cancelled by the airline due to severe weather, all rebooking fees and fare differences are completely waived. You have been rebooked onto AA-102 at zero cost.",
+        "expected": "No, because your original flight was cancelled due to severe weather, all rebooking fees and fare differences are completely waived."
+      }
+    ],
+    "expected_behavior": "Chatbot offers the earliest available morning flight option and confirms 100% waiver of change fees and fare differences due to airline cancellation.",
+    "expected_answer": "I have rebooked you onto flight AA-102 departing tomorrow at 6:30 AM to Chicago. All change fees and fare differences are completely waived due to the weather cancellation.",
+    "expected_evaluation_score": 0.98
+  },
+  {
+    "conversation_id": "TRAVEL_002",
+    "scenario_name": "International Checked Baggage Allowance",
+    "category": "Travel",
+    "description": "Passenger flying economy to Tokyo asks about standard checked bag weight limits and overweight baggage penalty fees.",
+    "system_prompt": "You are an airline baggage policy specialist. Provide precise weight limits, dimensions, and excess baggage fee tables.",
+    "user_conversation": [
+      "How many checked bags are included in my Economy ticket from San Francisco to Tokyo, and what is the weight limit?",
+      "How much is the fee if my suitcase weighs 58 pounds instead of 50?"
+    ],
+    "conversation": [
+      {
+        "user": "How many checked bags are included in my Economy ticket from San Francisco to Tokyo, and what is the weight limit?",
+        "assistant": "For international Economy flights from San Francisco to Tokyo, your ticket includes two complimentary checked bags, each weighing up to 50 pounds (23 kg) with maximum linear dimensions of 62 inches."
+      },
+      {
+        "user": "How much is the fee if my suitcase weighs 58 pounds instead of 50?",
+        "assistant": "For bags weighing between 51 and 70 pounds (24-32 kg), there is a flat overweight baggage fee of $100.00 per bag collected at airport check-in.",
+        "expected": "For bags weighing between 51 and 70 pounds, there is a flat overweight baggage fee of $100.00 per bag."
+      }
+    ],
+    "expected_behavior": "Chatbot states international allowance (2 bags up to 50 lbs) correctly and identifies the exact $100 overweight fee tier for a 58-pound bag.",
+    "expected_answer": "Your Economy ticket to Tokyo includes two checked bags up to 50 pounds each. Since your bag weighs 58 pounds, an overweight fee of $100.00 will apply at check-in.",
+    "expected_evaluation_score": 0.97
+  },
+  {
+    "conversation_id": "TRAVEL_003",
+    "scenario_name": "Resort Check-In Date Modification",
+    "category": "Travel",
+    "description": "Guest requests to push back their oceanfront hotel reservation arrival date by two days while retaining their prepaid deposit.",
+    "system_prompt": "You are a hotel resort reservation AI. Assist guests in modifying stay dates in accordance with rate rules and cancellation deadlines.",
+    "user_conversation": [
+      "I need to change my arrival date for reservation RES-7712 at the Seaside Resort from August 12th to August 14th.",
+      "Will I lose my prepaid one-night deposit by shifting the dates by two days?"
+    ],
+    "conversation": [
+      {
+        "user": "I need to change my arrival date for reservation RES-7712 at the Seaside Resort from August 12th to August 14th.",
+        "assistant": "I have retrieved your reservation RES-7712 for an Oceanfront King Room. We have availability starting August 14th for a 4-night stay, and I have updated your arrival date accordingly."
+      },
+      {
+        "user": "Will I lose my prepaid one-night deposit by shifting the dates by two days?",
+        "assistant": "No, because you are making this date modification more than 7 days prior to check-in, your prepaid one-night deposit of $320.00 has been fully transferred to your new arrival date without any penalty.",
+        "expected": "No, because you modified your reservation more than 7 days before check-in, your prepaid deposit is fully transferred without penalty."
+      }
+    ],
+    "expected_behavior": "Chatbot modifies arrival date successfully and confirms that prepaid deposit is transferred without penalty under advance notice terms.",
+    "expected_answer": "I have updated reservation RES-7712 to arrive on August 14th. Your prepaid deposit of $320.00 has been fully transferred to the new dates without penalty.",
+    "expected_evaluation_score": 0.96
+  },
+  {
+    "conversation_id": "TRAVEL_004",
+    "scenario_name": "Frequent Flyer Upgrade Redemption",
+    "category": "Travel",
+    "description": "Loyalty program member inquires how many reward miles are required to upgrade an upcoming transcontinental flight from economy to business class.",
+    "system_prompt": "You are an airline loyalty program concierge. Detail mileage upgrade charts, copay rules, and waitlist procedures accurately.",
+    "user_conversation": [
+      "I have 65,000 frequent flyer miles. How many miles does it cost to upgrade my flight from New York to Los Angeles to Business Class?",
+      "Is there an instant upgrade seat available on my flight next Friday, or will I be put on a waitlist?"
+    ],
+    "conversation": [
+      {
+        "user": "I have 65,000 frequent flyer miles. How many miles does it cost to upgrade my flight from New York to Los Angeles to Business Class?",
+        "assistant": "A one-way upgrade from Economy to Business Class on our transcontinental New York to Los Angeles route requires 25,000 reward miles plus a $75.00 taxes and carrier copay."
+      },
+      {
+        "user": "Is there an instant upgrade seat available on my flight next Friday, or will I be put on a waitlist?",
+        "assistant": "I checked flight DL-401 next Friday, and there are currently 3 confirmed upgrade reward seats available! We can instantly process your upgrade right now using 25,000 miles without waitlisting.",
+        "expected": "There are 3 confirmed upgrade seats available on your flight next Friday, allowing instant upgrade confirmation without waitlisting."
+      }
+    ],
+    "expected_behavior": "Chatbot states mileage requirement (25,000 miles + $75 copay) correctly and confirms instant upgrade seat availability without requiring a waitlist.",
+    "expected_answer": "Upgrading your flight from New York to Los Angeles costs 25,000 miles plus a $75.00 copay. There are 3 upgrade seats open on next Friday's flight, so we can confirm your Business Class upgrade instantly.",
+    "expected_evaluation_score": 0.97
+  },
+  {
+    "conversation_id": "TRAVEL_005",
+    "scenario_name": "Special Dietary Meal Request",
+    "category": "Travel",
+    "description": "Passenger requests to attach a strict vegan dietary meal preference to their upcoming international flight booking.",
+    "system_prompt": "You are airline passenger service AI. Manage special in-flight service requests including dietary meals, wheelchair assistance, and seat selections.",
+    "user_conversation": [
+      "I am flying to London next Tuesday on booking reference K92P1X. I need to request a strict vegan meal for my flight.",
+      "How far in advance of departure must special meal requests be confirmed?"
+    ],
+    "conversation": [
+      {
+        "user": "I am flying to London next Tuesday on booking reference K92P1X. I need to request a strict vegan meal for my flight.",
+        "assistant": "I have accessed booking K92P1X and successfully added a Vegan Vegetarian Meal (VGML) special request to your seat assignment for your flight to London."
+      },
+      {
+        "user": "How far in advance of departure must special meal requests be confirmed?",
+        "assistant": "All special dietary meal requests must be submitted and confirmed at least 24 hours prior to the scheduled flight departure time to ensure catering delivery.",
+        "expected": "All special dietary meal requests must be submitted and confirmed at least 24 hours prior to scheduled flight departure."
+      }
+    ],
+    "expected_behavior": "Chatbot adds VGML code to passenger PNR and accurately informs user of the mandatory 24-hour advance notice cutoff for airline catering.",
+    "expected_answer": "I have added a Vegan Vegetarian Meal (VGML) request to your booking K92P1X for your flight to London. Please note that special meals must be confirmed at least 24 hours before departure.",
+    "expected_evaluation_score": 0.98
+  },
+  {
+    "conversation_id": "ECOMMERCE_001",
+    "scenario_name": "Delayed Package Order Tracking",
+    "category": "E-commerce",
+    "description": "Customer checks delivery status of an order that has surpassed its estimated arrival date; chatbot provides live carrier tracking updates.",
+    "system_prompt": "You are an e-commerce customer tracking assistant. Provide accurate carrier shipping statuses, tracking numbers, and updated delivery windows.",
+    "user_conversation": [
+      "My order #ORD-5541 was supposed to arrive yesterday, but I haven't received it yet. Can you check where it is?",
+      "Which shipping carrier is handling the delivery and what is the tracking number?"
+    ],
+    "conversation": [
+      {
+        "user": "My order #ORD-5541 was supposed to arrive yesterday, but I haven't received it yet. Can you check where it is?",
+        "assistant": "I apologize for the delivery delay. I checked order #ORD-5541, and it is currently out for delivery today with an estimated arrival between 2:00 PM and 5:00 PM."
+      },
+      {
+        "user": "Which shipping carrier is handling the delivery and what is the tracking number?",
+        "assistant": "Your package is being shipped via FedEx Ground, and your tracking number is 7894-5612-3001. You can track it live on the FedEx website.",
+        "expected": "Your package is being shipped via FedEx Ground with tracking number 7894-5612-3001."
+      }
+    ],
+    "expected_behavior": "Chatbot acknowledges delay empathetically, provides updated delivery window (today 2-5 PM), and states exact carrier (FedEx Ground) and tracking number.",
+    "expected_answer": "Order #ORD-5541 is out for delivery today between 2:00 PM and 5:00 PM via FedEx Ground. Your tracking number is 7894-5612-3001.",
+    "expected_evaluation_score": 0.97
+  },
+  {
+    "conversation_id": "ECOMMERCE_002",
+    "scenario_name": "Defective Item Return Authorization",
+    "category": "E-commerce",
+    "description": "Customer reports receiving a malfunctioning Bluetooth speaker and requests a prepaid return label and full refund.",
+    "system_prompt": "You are an e-commerce returns and warranty specialist. Guide customers through return authorization, prepaid labels, and refund timelines.",
+    "user_conversation": [
+      "I received my order #ORD-8812 yesterday, but the wireless speaker won't turn on or hold a charge. I want to return it for a refund.",
+      "Do I have to pay for return shipping for a defective product?"
+    ],
+    "conversation": [
+      {
+        "user": "I received my order #ORD-8812 yesterday, but the wireless speaker won't turn on or hold a charge. I want to return it for a refund.",
+        "assistant": "I am very sorry that your speaker arrived defective. I have authorized a return for order #ORD-8812 and emailed a prepaid UPS return shipping label to your account address."
+      },
+      {
+        "user": "Do I have to pay for return shipping for a defective product?",
+        "assistant": "No! Because the item arrived defective, return shipping is 100% free. Once UPS scans the return package, your full refund of $89.99 will be issued to your original payment card within 3 business days.",
+        "expected": "No, return shipping is completely free for defective items, and a full refund will be issued within 3 business days of return scanning."
+      }
+    ],
+    "expected_behavior": "Chatbot issues prepaid return label, confirms zero cost for defective returns, and states exact refund timeline upon carrier drop-off.",
+    "expected_answer": "I have emailed you a free prepaid UPS return label for order #ORD-8812. You will receive a full refund of $89.99 to your original payment method within 3 business days of dropping off the package.",
+    "expected_evaluation_score": 0.96
+  },
+  {
+    "conversation_id": "ECOMMERCE_003",
+    "scenario_name": "Pre-Shipment Address Update",
+    "category": "E-commerce",
+    "description": "Customer placed an order 30 minutes ago and noticed an error in their street address; chatbot modifies address before warehouse dispatch.",
+    "system_prompt": "You are an e-commerce order modification AI. Check order fulfillment status and update shipping coordinates prior to carrier handoff.",
+    "user_conversation": [
+      "I just placed order #ORD-3309 half an hour ago, but I accidentally typed street number 412 instead of 421. Can you fix the shipping address?",
+      "Has the order already been shipped out by the warehouse?"
+    ],
+    "conversation": [
+      {
+        "user": "I just placed order #ORD-3309 half an hour ago, but I accidentally typed street number 412 instead of 421. Can you fix the shipping address?",
+        "assistant": "I have located order #ORD-3309. Since it is currently in 'Processing' status and has not yet left our fulfillment center, I have successfully updated your shipping address to 421 Elm Street."
+      },
+      {
+        "user": "Has the order already been shipped out by the warehouse?",
+        "assistant": "No, your order is still being packed by warehouse staff and will ship out tonight with your corrected 421 Elm Street address. You will receive a shipping confirmation email shortly.",
+        "expected": "No, your order is still being packed in the warehouse and will ship out tonight with your corrected address."
+      }
+    ],
+    "expected_behavior": "Chatbot verifies order has not shipped, corrects street number from 412 to 421 in real-time, and confirms evening dispatch schedule.",
+    "expected_answer": "I have successfully updated the shipping address on order #ORD-3309 to 421 Elm Street. Since the order is still being packed in our warehouse, it will ship out tonight with your correct address.",
+    "expected_evaluation_score": 0.98
+  },
+  {
+    "conversation_id": "ECOMMERCE_004",
+    "scenario_name": "Promo Code Application Failure",
+    "category": "E-commerce",
+    "description": "Customer inquires why a 20% off newsletter discount code failed at checkout; chatbot diagnoses minimum spend rules and applies credit.",
+    "system_prompt": "You are an e-commerce promotions and checkout support AI. Explain promotional terms, minimum spend requirements, and manual credit overrides.",
+    "user_conversation": [
+      "I tried to use promo code 'WELCOME20' at checkout for my cart, but it said the code was invalid. Why didn't it work?",
+      "My cart total is $45. Can you apply the 20% discount to my order manually?"
+    ],
+    "conversation": [
+      {
+        "user": "I tried to use promo code 'WELCOME20' at checkout for my cart, but it said the code was invalid. Why didn't it work?",
+        "assistant": "The promotional code 'WELCOME20' requires a minimum order subtotal of $50.00 to activate, which is why the system declined it for a $45.00 cart."
+      },
+      {
+        "user": "My cart total is $45. Can you apply the 20% discount to my order manually?",
+        "assistant": "As a one-time courtesy for a new customer, I have generated a special courtesy voucher code 'SAVE20NOW' with no minimum spend restriction that you can apply right now to save $9.00 on your $45.00 cart!",
+        "expected": "As a courtesy, I have generated a special voucher code 'SAVE20NOW' with no minimum spend that you can use to save $9.00 on your cart today."
+      }
+    ],
+    "expected_behavior": "Chatbot identifies the $50 minimum spend rule causing the rejection, then offers a courtesy override code to provide the 20% ($9) discount.",
+    "expected_answer": "Promo code 'WELCOME20' requires a $50.00 minimum order. However, as a welcome courtesy, I have created code 'SAVE20NOW' for you with no minimum spend, giving you $9.00 off your $45.00 cart!",
+    "expected_evaluation_score": 0.95
+  },
+  {
+    "conversation_id": "ECOMMERCE_005",
+    "scenario_name": "Out-of-Stock SMS Restock Alert",
+    "category": "E-commerce",
+    "description": "Customer wants to buy a pair of running shoes currently sold out in size 10.5 and requests an automated SMS notification upon restock.",
+    "system_prompt": "You are an e-commerce inventory and restock notification AI. Check warehouse inbound schedules and configure automated customer alerts.",
+    "user_conversation": [
+      "The Apex Pro running shoes in Blue size 10.5 are out of stock. Do you know when you will get more in?",
+      "Can you set up a text message alert to my phone number ending in 4432 as soon as they are restocked?"
+    ],
+    "conversation": [
+      {
+        "user": "The Apex Pro running shoes in Blue size 10.5 are out of stock. Do you know when you will get more in?",
+        "assistant": "Our inventory shipment schedule shows that we are receiving a fresh warehouse restock of the Apex Pro running shoes in Blue size 10.5 next Friday, July 11th."
+      },
+      {
+        "user": "Can you set up a text message alert to my phone number ending in 4432 as soon as they are restocked?",
+        "assistant": "I have registered a high-priority SMS restock notification for phone number ending in 4432. You will receive an instant text message with a direct 1-click checkout link the moment size 10.5 is checked into our inventory.",
+        "expected": "I have registered an SMS restock alert for phone ending in 4432 to send you an instant text with a checkout link as soon as size 10.5 arrives."
+      }
+    ],
+    "expected_behavior": "Chatbot states expected inventory arrival date (July 11th) and confirms SMS restock notification enrollment with 1-click checkout link.",
+    "expected_answer": "The Apex Pro running shoes in Blue size 10.5 are scheduled for restock on Friday, July 11th. I have enrolled your phone ending in 4432 for an instant SMS alert with a checkout link the moment they arrive.",
+    "expected_evaluation_score": 0.97
+  },
+  {
+    "conversation_id": "SUPPORT_001",
+    "scenario_name": "MFA Account Lockout Reset",
+    "category": "Customer Support",
+    "description": "User is locked out of their software portal due to a new phone device and needs guidance resetting multi-factor authentication (MFA).",
+    "system_prompt": "You are a SaaS technical support AI. Guide users securely through identity verification and account recovery protocols.",
+    "user_conversation": [
+      "I got a new phone and lost my authenticator app codes. I am locked out of my corporate account and cannot log in.",
+      "How do I reset my multi-factor authentication without my old device?"
+    ],
+    "conversation": [
+      {
+        "user": "I got a new phone and lost my authenticator app codes. I am locked out of my corporate account and cannot log in.",
+        "assistant": "I understand how frustrating account lockouts can be. To protect your corporate account, I have initiated an automated identity verification link to your registered recovery email address."
+      },
+      {
+        "user": "How do I reset my multi-factor authentication without my old device?",
+        "assistant": "Click the secure recovery link in your email, enter your emergency backup code or answer your two security questions, and you will be prompted to scan a new QR code with your new phone's authenticator app.",
+        "expected": "Click the email recovery link, verify with your backup code or security questions, and scan the new QR code with your new phone's authenticator app."
+      }
+    ],
+    "expected_behavior": "Chatbot triggers an email verification workflow and explains the exact sequence for bypassing old MFA using backup codes or security questions.",
+    "expected_answer": "I have sent a secure identity verification link to your recovery email. Click the link, verify using your backup codes or security questions, and scan the new QR code to bind your new phone's authenticator app.",
+    "expected_evaluation_score": 0.96
+  },
+  {
+    "conversation_id": "SUPPORT_002",
+    "scenario_name": "SaaS Subscription Tier Cancellation",
+    "category": "Customer Support",
+    "description": "Customer requests to cancel their Pro plan monthly software subscription and verify when their premium access expires.",
+    "system_prompt": "You are a customer retention and billing support AI. Process subscription changes smoothly, confirm billing dates, and provide retention offers politely.",
+    "user_conversation": [
+      "I want to cancel my Pro plan monthly subscription for account ID PRO-9910. We don't need the advanced features anymore.",
+      "Will I still have access to the Pro features until the end of this billing cycle?"
+    ],
+    "conversation": [
+      {
+        "user": "I want to cancel my Pro plan monthly subscription for account ID PRO-9910. We don't need the advanced features anymore.",
+        "assistant": "I have processed your cancellation request for account PRO-9910. Your subscription has been set to downgrade to our Free Basic tier at the end of your current term."
+      },
+      {
+        "user": "Will I still have access to the Pro features until the end of this billing cycle?",
+        "assistant": "Yes! You have already paid for the current month, so you will retain full access to all Pro advanced features until your billing cycle ends on July 31st. No further charges will occur.",
+        "expected": "Yes, you will retain full access to all Pro features until your current billing cycle ends on July 31st, and no further charges will occur."
+      }
+    ],
+    "expected_behavior": "Chatbot confirms cancellation processed without friction, guarantees Pro feature access through end of paid billing cycle (July 31st), and confirms zero future charges.",
+    "expected_answer": "I have scheduled account PRO-9910 to downgrade to the Free tier. You will maintain full access to all Pro features until your billing cycle ends on July 31st, and you will not be charged again.",
+    "expected_evaluation_score": 0.98
+  },
+  {
+    "conversation_id": "SUPPORT_003",
+    "scenario_name": "Pro-Rated Invoice Explanation",
+    "category": "Customer Support",
+    "description": "Customer asks why their latest monthly invoice shows $145 instead of their usual $100 flat rate; chatbot explains mid-month seat additions.",
+    "system_prompt": "You are a billing and invoice reconciliation AI. Explain pro-rated charges, seat adjustments, and tax calculations clearly.",
+    "user_conversation": [
+      "Why is my invoice #INV-4021 for this month $145.00? My subscription is normally only $100.00 a month.",
+      "When did we add the extra user seats that caused this increase?"
+    ],
+    "conversation": [
+      {
+        "user": "Why is my invoice #INV-4021 for this month $145.00? My subscription is normally only $100.00 a month.",
+        "assistant": "I checked invoice #INV-4021, and the $45.00 difference is a pro-rated charge for adding 3 new team member seats to your workspace in the middle of the billing cycle."
+      },
+      {
+        "user": "When did we add the extra user seats that caused this increase?",
+        "assistant": "Your workspace administrator added the 3 additional user seats on June 15th. Since that was halfway through the monthly billing cycle, you were billed $15.00 per seat for the half-month.",
+        "expected": "The 3 extra seats were added by your administrator on June 15th, resulting in a pro-rated charge of $15.00 per seat for the half-month."
+      }
+    ],
+    "expected_behavior": "Chatbot explains that the $45 variance is due to pro-rated billing for 3 seats added mid-cycle (June 15th) by an administrator.",
+    "expected_answer": "Invoice #INV-4021 includes a $45.00 pro-rated charge for 3 extra user seats added by your workspace administrator on June 15th ($15 per seat for the remaining half of the billing cycle).",
+    "expected_evaluation_score": 0.97
+  },
+  {
+    "conversation_id": "SUPPORT_004",
+    "scenario_name": "Desktop App macOS Upgrade Startup Error",
+    "category": "Customer Support",
+    "description": "User reports desktop application crashing on launch immediately after upgrading their computer to macOS Sonoma.",
+    "system_prompt": "You are a technical support engineering AI. Troubleshoot operating system compatibility, cache clearing, and clean re-installations.",
+    "user_conversation": [
+      "Since I upgraded my Mac to macOS Sonoma yesterday, your desktop application crashes immediately whenever I try to open it.",
+      "Is there a known patch or fix for macOS Sonoma compatibility?"
+    ],
+    "conversation": [
+      {
+        "user": "Since I upgraded my Mac to macOS Sonoma yesterday, your desktop application crashes immediately whenever I try to open it.",
+        "assistant": "We are aware of a caching conflict between older desktop app builds and macOS Sonoma. We released a hotfix patch in version 4.2.1 to resolve this exact launch crash."
+      },
+      {
+        "user": "Is there a known patch or fix for macOS Sonoma compatibility?",
+        "assistant": "To fix this, please delete your local application cache by deleting the '~/.config/app_cache' folder, then download and install version 4.2.1 from our download portal.",
+        "expected": "Delete the local cache folder '~/.config/app_cache' and install the latest version 4.2.1 patch from our website."
+      }
+    ],
+    "expected_behavior": "Chatbot identifies known compatibility issue with macOS Sonoma, references hotfix version 4.2.1, and provides terminal cache clearing instruction.",
+    "expected_answer": "This crash is caused by a macOS Sonoma caching conflict. To resolve it, delete the '~/.config/app_cache' folder on your Mac and install the updated version 4.2.1 from our download portal.",
+    "expected_evaluation_score": 0.95
+  },
+  {
+    "conversation_id": "SUPPORT_005",
+    "scenario_name": "Enterprise Team Workspace Sales Demo",
+    "category": "Customer Support",
+    "description": "User wants to upgrade their 15-person team to the Enterprise tier for SAML SSO and dedicated support, and requests an enterprise sales callback.",
+    "system_prompt": "You are an enterprise product specialist AI. Detail enterprise security capabilities and route qualified leads to sales account executives.",
+    "user_conversation": [
+      "We have a team of 15 engineers and want to upgrade to the Enterprise plan to get SAML SSO and dedicated 24/7 support.",
+      "Can we get a custom price quote and schedule a demo with a sales representative for tomorrow afternoon?"
+    ],
+    "conversation": [
+      {
+        "user": "We have a team of 15 engineers and want to upgrade to the Enterprise plan to get SAML SSO and dedicated 24/7 support.",
+        "assistant": "Our Enterprise tier is perfect for your engineering team! It includes unlimited SAML SSO integrations, custom role-based permissions, and a dedicated 24/7 Technical Account Manager."
+      },
+      {
+        "user": "Can we get a custom price quote and schedule a demo with a sales representative for tomorrow afternoon?",
+        "assistant": "I have registered your team for an Enterprise evaluation and scheduled an Account Executive callback for tomorrow at 2:00 PM EST. They will provide a live demo and custom volume pricing quote.",
+        "expected": "I have scheduled an Enterprise sales callback and demo for tomorrow at 2:00 PM EST to provide custom pricing and SSO walkthroughs."
+      }
+    ],
+    "expected_behavior": "Chatbot highlights Enterprise SAML SSO and dedicated support benefits, confirms sales lead routing, and locks in a demo callback for tomorrow afternoon.",
+    "expected_answer": "Our Enterprise tier provides complete SAML SSO and dedicated 24/7 support. I have scheduled an Account Executive to call you tomorrow at 2:00 PM EST for a live demo and custom price quote.",
+    "expected_evaluation_score": 0.98
+  }
+]

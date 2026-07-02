@@ -1,0 +1,25 @@
+{
+  "conversation_id": "BANKING_005",
+  "scenario_name": "Unrecognized Charge Dispute",
+  "category": "Banking",
+  "description": "User notices an unfamiliar online transaction on their credit card statement and wishes to initiate a formal billing dispute.",
+  "system_prompt": "You are a credit card dispute resolution assistant. Explain dispute timelines, provisional credits, and necessary cardholder actions.",
+  "user_conversation": [
+    "I see an unknown charge of $129.99 from 'TechCloud Solutions' on my credit card statement yesterday that I did not authorize.",
+    "How long does the dispute investigation take, and will I receive a temporary credit?"
+  ],
+  "conversation": [
+    {
+      "user": "I see an unknown charge of $129.99 from 'TechCloud Solutions' on my credit card statement yesterday that I did not authorize.",
+      "assistant": "I am sorry to hear about this unauthorized charge. I have initiated a formal dispute for the $129.99 transaction from TechCloud Solutions and blocked the merchant from further billing."
+    },
+    {
+      "user": "How long does the dispute investigation take, and will I receive a temporary credit?",
+      "assistant": "We will issue a temporary provisional credit of $129.99 to your account within 2 business days. The full merchant investigation typically concludes within 30 to 45 days.",
+      "expected": "We will issue a temporary provisional credit of $129.99 within 2 business days, and the investigation takes 30 to 45 days."
+    }
+  ],
+  "expected_behavior": "Chatbot confirms initiation of dispute for the exact merchant and amount, and clearly communicates the 2-day provisional credit timeline and 30-45 day investigation window.",
+  "expected_answer": "I have initiated a dispute for the $129.99 charge from TechCloud Solutions. A provisional credit will be applied within 2 business days while the 30 to 45 day investigation is completed.",
+  "expected_evaluation_score": 0.96
+}

@@ -1,0 +1,25 @@
+{
+  "conversation_id": "TRAVEL_003",
+  "scenario_name": "Resort Check-In Date Modification",
+  "category": "Travel",
+  "description": "Guest requests to push back their oceanfront hotel reservation arrival date by two days while retaining their prepaid deposit.",
+  "system_prompt": "You are a hotel resort reservation AI. Assist guests in modifying stay dates in accordance with rate rules and cancellation deadlines.",
+  "user_conversation": [
+    "I need to change my arrival date for reservation RES-7712 at the Seaside Resort from August 12th to August 14th.",
+    "Will I lose my prepaid one-night deposit by shifting the dates by two days?"
+  ],
+  "conversation": [
+    {
+      "user": "I need to change my arrival date for reservation RES-7712 at the Seaside Resort from August 12th to August 14th.",
+      "assistant": "I have retrieved your reservation RES-7712 for an Oceanfront King Room. We have availability starting August 14th for a 4-night stay, and I have updated your arrival date accordingly."
+    },
+    {
+      "user": "Will I lose my prepaid one-night deposit by shifting the dates by two days?",
+      "assistant": "No, because you are making this date modification more than 7 days prior to check-in, your prepaid one-night deposit of $320.00 has been fully transferred to your new arrival date without any penalty.",
+      "expected": "No, because you modified your reservation more than 7 days before check-in, your prepaid deposit is fully transferred without penalty."
+    }
+  ],
+  "expected_behavior": "Chatbot modifies arrival date successfully and confirms that prepaid deposit is transferred without penalty under advance notice terms.",
+  "expected_answer": "I have updated reservation RES-7712 to arrive on August 14th. Your prepaid deposit of $320.00 has been fully transferred to the new dates without penalty.",
+  "expected_evaluation_score": 0.96
+}

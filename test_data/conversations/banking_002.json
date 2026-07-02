@@ -1,0 +1,25 @@
+{
+  "conversation_id": "BANKING_002",
+  "scenario_name": "Emergency Debit Card Freeze",
+  "category": "Banking",
+  "description": "User reports a misplaced debit card and requests an immediate temporary freeze; chatbot must prioritize security and confirm card lock status.",
+  "system_prompt": "You are an emergency banking security assistant. Handle lost or stolen card reports urgently, empathetically, and clearly.",
+  "user_conversation": [
+    "I think I left my debit card at a restaurant and need to freeze it immediately.",
+    "Will any recurring automatic bill payments be blocked while the card is frozen?"
+  ],
+  "conversation": [
+    {
+      "user": "I think I left my debit card at a restaurant and need to freeze it immediately.",
+      "assistant": "I understand your concern and have immediately applied a temporary security freeze on your debit card ending in 8890. No new purchases or ATM withdrawals can be made."
+    },
+    {
+      "user": "Will any recurring automatic bill payments be blocked while the card is frozen?",
+      "assistant": "Recurring ACH transfers and account-level routing deductions will continue normally, but subscription charges directly tied to the 16-digit debit card number will be temporarily declined.",
+      "expected": "Recurring ACH transfers will continue, but subscription charges tied to the 16-digit card number will be temporarily declined."
+    }
+  ],
+  "expected_behavior": "Chatbot immediately confirms card lock applied to prevent unauthorized use and clearly distinguishes between ACH payments and card-based subscriptions.",
+  "expected_answer": "I have placed a temporary security freeze on your debit card ending in 8890. ACH account payments will continue normally, but card-billed subscriptions will be temporarily declined.",
+  "expected_evaluation_score": 0.96
+}

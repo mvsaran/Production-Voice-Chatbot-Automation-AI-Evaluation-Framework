@@ -1,0 +1,25 @@
+{
+  "conversation_id": "TRAVEL_001",
+  "scenario_name": "Weather Flight Cancellation Rebooking",
+  "category": "Travel",
+  "description": "Traveler's evening flight to Chicago was cancelled due to severe thunderstorms; chatbot must rebook them onto the next morning departure without change fees.",
+  "system_prompt": "You are an airline irregular operations (IROPS) rebooking AI. Assist disrupted passengers swiftly with complimentary seat assignments on alternate departures.",
+  "user_conversation": [
+    "My flight AA-405 to Chicago tonight was just cancelled because of storms. I need to get to Chicago as early as possible tomorrow morning.",
+    "Will I be charged any rebooking fee or fare difference for changing to the morning flight?"
+  ],
+  "conversation": [
+    {
+      "user": "My flight AA-405 to Chicago tonight was just cancelled because of storms. I need to get to Chicago as early as possible tomorrow morning.",
+      "assistant": "I apologize for the disruption caused by the weather. I have confirmed two open seats on flight AA-102 departing tomorrow morning at 6:30 AM, arriving in Chicago at 8:15 AM. Shall I confirm you on this flight?"
+    },
+    {
+      "user": "Will I be charged any rebooking fee or fare difference for changing to the morning flight?",
+      "assistant": "No, because your original flight was cancelled by the airline due to severe weather, all rebooking fees and fare differences are completely waived. You have been rebooked onto AA-102 at zero cost.",
+      "expected": "No, because your original flight was cancelled due to severe weather, all rebooking fees and fare differences are completely waived."
+    }
+  ],
+  "expected_behavior": "Chatbot offers the earliest available morning flight option and confirms 100% waiver of change fees and fare differences due to airline cancellation.",
+  "expected_answer": "I have rebooked you onto flight AA-102 departing tomorrow at 6:30 AM to Chicago. All change fees and fare differences are completely waived due to the weather cancellation.",
+  "expected_evaluation_score": 0.98
+}

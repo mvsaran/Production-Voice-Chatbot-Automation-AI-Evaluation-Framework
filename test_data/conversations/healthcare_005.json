@@ -1,0 +1,25 @@
+{
+  "conversation_id": "HEALTHCARE_005",
+  "scenario_name": "Patient Portal Lab Results Access",
+  "category": "Healthcare",
+  "description": "Patient seeks guidance on finding and viewing recent routine complete blood count (CBC) lab results on the patient web portal.",
+  "system_prompt": "You are a patient portal technical support AI. Provide clear, step-by-step navigation help while respecting HIPAA data security rules.",
+  "user_conversation": [
+    "My doctor said my routine blood test results from Tuesday are ready. How do I view them online?",
+    "Can I download a PDF copy of the lab report to keep for my records?"
+  ],
+  "conversation": [
+    {
+      "user": "My doctor said my routine blood test results from Tuesday are ready. How do I view them online?",
+      "assistant": "To view your blood test results, log into your MyHealth Patient Portal, click on the 'Health Records' menu on the left sidebar, and select 'Lab & Test Results'. Your CBC report from Tuesday is listed at the top."
+    },
+    {
+      "user": "Can I download a PDF copy of the lab report to keep for my records?",
+      "assistant": "Yes! When viewing the specific test report online, click the 'Download PDF' icon in the upper right corner of the screen to save a certified copy for your records.",
+      "expected": "Yes, click the 'Download PDF' icon in the upper right corner of the report screen to save a copy for your records."
+    }
+  ],
+  "expected_behavior": "Chatbot provides precise UI navigation steps to access test results and confirms PDF export capability without reciting actual protected health information.",
+  "expected_answer": "You can view your blood test results by logging into the MyHealth Patient Portal under 'Health Records' > 'Lab & Test Results'. You can download a PDF copy by clicking the icon in the top right corner of the report.",
+  "expected_evaluation_score": 0.96
+}

@@ -1,0 +1,25 @@
+{
+  "conversation_id": "ECOMMERCE_003",
+  "scenario_name": "Pre-Shipment Address Update",
+  "category": "E-commerce",
+  "description": "Customer placed an order 30 minutes ago and noticed an error in their street address; chatbot modifies address before warehouse dispatch.",
+  "system_prompt": "You are an e-commerce order modification AI. Check order fulfillment status and update shipping coordinates prior to carrier handoff.",
+  "user_conversation": [
+    "I just placed order #ORD-3309 half an hour ago, but I accidentally typed street number 412 instead of 421. Can you fix the shipping address?",
+    "Has the order already been shipped out by the warehouse?"
+  ],
+  "conversation": [
+    {
+      "user": "I just placed order #ORD-3309 half an hour ago, but I accidentally typed street number 412 instead of 421. Can you fix the shipping address?",
+      "assistant": "I have located order #ORD-3309. Since it is currently in 'Processing' status and has not yet left our fulfillment center, I have successfully updated your shipping address to 421 Elm Street."
+    },
+    {
+      "user": "Has the order already been shipped out by the warehouse?",
+      "assistant": "No, your order is still being packed by warehouse staff and will ship out tonight with your corrected 421 Elm Street address. You will receive a shipping confirmation email shortly.",
+      "expected": "No, your order is still being packed in the warehouse and will ship out tonight with your corrected address."
+    }
+  ],
+  "expected_behavior": "Chatbot verifies order has not shipped, corrects street number from 412 to 421 in real-time, and confirms evening dispatch schedule.",
+  "expected_answer": "I have successfully updated the shipping address on order #ORD-3309 to 421 Elm Street. Since the order is still being packed in our warehouse, it will ship out tonight with your correct address.",
+  "expected_evaluation_score": 0.98
+}

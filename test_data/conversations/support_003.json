@@ -1,0 +1,25 @@
+{
+  "conversation_id": "SUPPORT_003",
+  "scenario_name": "Pro-Rated Invoice Explanation",
+  "category": "Customer Support",
+  "description": "Customer asks why their latest monthly invoice shows $145 instead of their usual $100 flat rate; chatbot explains mid-month seat additions.",
+  "system_prompt": "You are a billing and invoice reconciliation AI. Explain pro-rated charges, seat adjustments, and tax calculations clearly.",
+  "user_conversation": [
+    "Why is my invoice #INV-4021 for this month $145.00? My subscription is normally only $100.00 a month.",
+    "When did we add the extra user seats that caused this increase?"
+  ],
+  "conversation": [
+    {
+      "user": "Why is my invoice #INV-4021 for this month $145.00? My subscription is normally only $100.00 a month.",
+      "assistant": "I checked invoice #INV-4021, and the $45.00 difference is a pro-rated charge for adding 3 new team member seats to your workspace in the middle of the billing cycle."
+    },
+    {
+      "user": "When did we add the extra user seats that caused this increase?",
+      "assistant": "Your workspace administrator added the 3 additional user seats on June 15th. Since that was halfway through the monthly billing cycle, you were billed $15.00 per seat for the half-month.",
+      "expected": "The 3 extra seats were added by your administrator on June 15th, resulting in a pro-rated charge of $15.00 per seat for the half-month."
+    }
+  ],
+  "expected_behavior": "Chatbot explains that the $45 variance is due to pro-rated billing for 3 seats added mid-cycle (June 15th) by an administrator.",
+  "expected_answer": "Invoice #INV-4021 includes a $45.00 pro-rated charge for 3 extra user seats added by your workspace administrator on June 15th ($15 per seat for the remaining half of the billing cycle).",
+  "expected_evaluation_score": 0.97
+}

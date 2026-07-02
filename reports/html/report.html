@@ -1,0 +1,2120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voice Chatbot AI - Enterprise QA Dashboard</title>
+    <!-- Chart.js for interactive graphics -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0e17;
+            --bg-secondary: #121826;
+            --bg-card: rgba(25, 33, 50, 0.75);
+            --accent-cyan: #00f2fe;
+            --accent-blue: #4facfe;
+            --accent-purple: #b388ff;
+            --success: #00e676;
+            --warning: #ffb300;
+            --danger: #ff5252;
+            --text-main: #f0f4f8;
+            --text-muted: #8e9bad;
+            --border: rgba(255, 255, 255, 0.08);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--bg-primary);
+            background-image: radial-gradient(circle at 15% 15%, rgba(0, 242, 254, 0.05) 0%, transparent 40%),
+                              radial-gradient(circle at 85% 85%, rgba(179, 136, 255, 0.05) 0%, transparent 40%);
+            color: var(--text-main);
+            min-height: 100vh;
+            padding: 2rem;
+            line-height: 1.6;
+        }
+        .container { max-width: 1400px; margin: 0 auto; }
+        
+        /* Header & Glassmorphism */
+        header {
+            display: flex; justify-content: space-between; align-items: center;
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
+            padding: 1.5rem 2rem;
+            border-radius: 16px;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+        .logo-area h1 {
+            font-size: 1.8rem; font-weight: 700;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            display: flex; align-items: center; gap: 0.5rem;
+        }
+        .logo-area p { color: var(--text-muted); font-size: 0.9rem; margin-top: 0.2rem; }
+        .meta-tags { display: flex; gap: 1rem; align-items: center; }
+        .badge {
+            padding: 0.4rem 1rem; border-radius: 999px; font-weight: 600; font-size: 0.85rem;
+            text-transform: uppercase; letter-spacing: 0.5px;
+        }
+        .badge.pass { background: rgba(0, 230, 118, 0.15); color: var(--success); border: 1px solid var(--success); }
+        .badge.fail { background: rgba(255, 82, 82, 0.15); color: var(--danger); border: 1px solid var(--danger); }
+        
+        /* KPI Summary Grid */
+        .kpi-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem; margin-bottom: 2rem;
+        }
+        .kpi-card {
+            background: var(--bg-card); backdrop-filter: blur(10px);
+            border: 1px solid var(--border); border-radius: 16px; padding: 1.5rem;
+            position: relative; overflow: hidden; transition: transform 0.2s, border-color 0.2s;
+        }
+        .kpi-card:hover { transform: translateY(-4px); border-color: var(--accent-blue); }
+        .kpi-title { color: var(--text-muted); font-size: 0.85rem; font-weight: 500; text-transform: uppercase; }
+        .kpi-value { font-size: 2.2rem; font-weight: 700; margin: 0.5rem 0; color: var(--text-main); }
+        .kpi-sub { font-size: 0.8rem; color: var(--accent-cyan); }
+        
+        /* Chart Grid */
+        .chart-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem;
+        }
+        @media (max-width: 968px) { .chart-grid { grid-template-columns: 1fr; } }
+        .chart-box {
+            background: var(--bg-card); backdrop-filter: blur(10px);
+            border: 1px solid var(--border); border-radius: 16px; padding: 1.5rem;
+        }
+        .chart-box h3 { font-size: 1.1rem; margin-bottom: 1rem; color: var(--text-main); font-weight: 600; }
+        .chart-wrapper { position: relative; height: 300px; width: 100%; }
+
+        /* Filter Tabs */
+        .filter-bar {
+            display: flex; gap: 0.75rem; margin-bottom: 1.5rem; flex-wrap: wrap;
+        }
+        .filter-btn {
+            background: var(--bg-secondary); border: 1px solid var(--border); color: var(--text-muted);
+            padding: 0.5rem 1.25rem; border-radius: 8px; cursor: pointer; font-weight: 500;
+            transition: all 0.2s; font-family: 'Outfit', sans-serif;
+        }
+        .filter-btn:hover, .filter-btn.active {
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-cyan));
+            color: #000; font-weight: 600; border-color: transparent;
+        }
+        
+        /* Scenario Cards */
+        .scenario-list { display: flex; flex-direction: column; gap: 1rem; }
+        .scenario-card {
+            background: var(--bg-card); backdrop-filter: blur(10px);
+            border: 1px solid var(--border); border-radius: 16px; padding: 1.5rem;
+            transition: all 0.2s;
+        }
+        .scenario-card:hover { border-color: rgba(255, 255, 255, 0.2); }
+        .scenario-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+        .scenario-title { font-size: 1.2rem; font-weight: 600; color: var(--accent-cyan); display: flex; align-items: center; gap: 0.75rem; }
+        .scenario-id { font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; background: var(--bg-secondary); padding: 0.2rem 0.6rem; border-radius: 6px; color: var(--text-muted); }
+        
+        /* Dialogue Grid */
+        .dialogue-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
+            background: var(--bg-secondary); border-radius: 12px; padding: 1rem; margin-bottom: 1rem;
+        }
+        @media (max-width: 768px) { .dialogue-grid { grid-template-columns: 1fr; } }
+        .dialogue-box { display: flex; flex-direction: column; gap: 0.4rem; }
+        .dialogue-label { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; color: var(--text-muted); }
+        .dialogue-text { font-size: 0.95rem; color: var(--text-main); background: rgba(0,0,0,0.2); padding: 0.75rem; border-radius: 8px; border-left: 3px solid var(--accent-blue); }
+        .dialogue-text.expected { border-left-color: var(--accent-purple); }
+        
+        /* Metrics Bar */
+        .metrics-bar { display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; }
+        .metric-pill {
+            display: flex; align-items: center; gap: 0.4rem; background: rgba(0,0,0,0.3);
+            border: 1px solid var(--border); padding: 0.4rem 0.8rem; border-radius: 8px;
+            font-size: 0.85rem; font-family: 'JetBrains Mono', monospace;
+        }
+        .metric-pill span { color: var(--text-muted); }
+        .metric-pill strong { color: var(--text-main); }
+        .metric-pill.good strong { color: var(--success); }
+        .metric-pill.warn strong { color: var(--warning); }
+        .metric-pill.bad strong { color: var(--danger); }
+
+        /* Footer */
+        footer { text-align: center; margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 0.85rem; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <div class="logo-area">
+                <h1>🎙️ Voice Chatbot AI Automation</h1>
+                <p>Enterprise AI Quality Assurance & Speech Telemetry Dashboard</p>
+            </div>
+            <div class="meta-tags">
+                <div class="badge pass">
+                    SLA PASSED
+                </div>
+                <div style="text-align: right; font-size: 0.85rem; color: var(--text-muted);">
+                    Generated: <span style="color: var(--text-main);">02-Jul-2026 07:24:48 UTC</span><br>
+                    Engine: <strong>DeepEval + Whisper + GPT-4o</strong>
+                </div>
+            </div>
+        </header>
+
+        <!-- KPI Summary Grid -->
+        <div class="kpi-grid">
+            <div class="kpi-card">
+                <div class="kpi-title">Overall Pass Rate</div>
+                <div class="kpi-value" style="color: #00e676;">93.9%</div>
+                <div class="kpi-sub">31 / 33 Scenarios Passed SLA</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-title">Average AI Quality Score</div>
+                <div class="kpi-value">0.93<span style="font-size: 1.2rem;">/1.0</span></div>
+                <div class="kpi-sub">DeepEval Correctness & Relevancy</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-title">Speech Recognition (WER)</div>
+                <div class="kpi-value" style="color: #00e676;">0.044</div>
+                <div class="kpi-sub">Target SLA: WER &le; 0.10 (90%+ Accuracy)</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-title">Average End-to-End Latency</div>
+                <div class="kpi-value">4.6s</div>
+                <div class="kpi-sub">Whisper STT + GPT-4o + OpenAI TTS</div>
+            </div>
+        </div>
+
+        <!-- Interactive Chart Grid -->
+        <div class="chart-grid">
+            <div class="chart-box">
+                <h3>📈 DeepEval AI Quality Radar (SLA Compliance)</h3>
+                <div class="chart-wrapper">
+                    <canvas id="qualityRadarChart"></canvas>
+                </div>
+            </div>
+            <div class="chart-box">
+                <h3>⏱️ End-to-End Turn Latency Breakdown (Seconds)</h3>
+                <div class="chart-wrapper">
+                    <canvas id="latencyBarChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Filter Bar -->
+        <div class="filter-bar">
+            <button class="filter-btn active" onclick="filterScenarios('ALL', this)">All Scenarios (33)</button>
+            <button class="filter-btn" onclick="filterScenarios('PASS', this)">Passed Only (31)</button>
+            <button class="filter-btn" onclick="filterScenarios('FAIL', this)">Failed / Warnings (2)</button>
+            <button class="filter-btn" onclick="filterScenarios('Banking', this)">🏦 Banking</button>
+            <button class="filter-btn" onclick="filterScenarios('Healthcare', this)">🏥 Healthcare</button>
+            <button class="filter-btn" onclick="filterScenarios('Insurance', this)">🛡️ Insurance</button>
+            <button class="filter-btn" onclick="filterScenarios('Travel', this)">✈️ Travel</button>
+            <button class="filter-btn" onclick="filterScenarios('E-commerce', this)">🛒 E-Commerce</button>
+            <button class="filter-btn" onclick="filterScenarios('Support', this)">🎧 Support</button>
+        </div>
+
+        <!-- Scenario List -->
+        <div class="scenario-list">
+            
+            <div class="scenario-card" data-status="PASS" data-category="Support">
+                <div class="scenario-header">
+                    <div class="scenario-title">
+                        🎙️ Live Interactive Microphone Turn 1 (Generative AI Inquiry)
+                        <span class="scenario-id">LIVE_MIC_001</span>
+                    </div>
+                    <div class="badge pass">
+                        PASS
+                    </div>
+                </div>
+
+                <div class="dialogue-grid">
+                    <div class="dialogue-box">
+                        <div class="dialogue-label">👤 User Spoke (Transcribed by Whisper)</div>
+                        <div class="dialogue-text">"Can you tell me what is Generator AI?"</div>
+                    </div>
+                    <div class="dialogue-box">
+                        <div class="dialogue-label">🤖 Chatbot Voice Answer (Synthesized by TTS)</div>
+                        <div class="dialogue-text">"Generative AI refers to artificial intelligence models designed to generate new content—such as text, images, audio, code, or video—based on learned patterns from vast amounts of data. Using neural networks like transformers, models such as GPT-4o or DALL-E synthesize novel outputs rather than merely analyzing or classifying existing records."</div>
+                    </div>
+                </div>
+
+                <div class="metrics-bar">
+                    <div class="metric-pill good">
+                        <span>Correctness:</span> <strong>0.98</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>Relevancy:</span> <strong>0.99</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>Hallucination:</span> <strong>0.01</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>WER:</span> <strong>0.05</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>CER:</span> <strong>0.02</strong>
+                    </div>
+                    <div class="metric-pill">
+                        <span>STT Latency:</span> <strong>0.82s</strong>
+                    </div>
+                    <div class="metric-pill">
+                        <span>LLM Latency:</span> <strong>1.45s</strong>
+                    </div>
+                    <div class="metric-pill">
+                        <span>TTS Latency:</span> <strong>2.1s</strong>
+                    </div>
+                    <div class="metric-pill" style="background: rgba(0, 242, 254, 0.1); border-color: var(--accent-cyan);">
+                        <span>Total Latency:</span> <strong style="color: var(--accent-cyan);">4.37s</strong>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="scenario-card" data-status="PASS" data-category="Support">
+                <div class="scenario-header">
+                    <div class="scenario-title">
+                        🎙️ Live Interactive Microphone Turn 2 (Gen AI in Test Automation)
+                        <span class="scenario-id">LIVE_MIC_002</span>
+                    </div>
+                    <div class="badge pass">
+                        PASS
+                    </div>
+                </div>
+
+                <div class="dialogue-grid">
+                    <div class="dialogue-box">
+                        <div class="dialogue-label">👤 User Spoke (Transcribed by Whisper)</div>
+                        <div class="dialogue-text">"How generative AI helps for test automation and how it helps"</div>
+                    </div>
+                    <div class="dialogue-box">
+                        <div class="dialogue-label">🤖 Chatbot Voice Answer (Synthesized by TTS)</div>
+                        <div class="dialogue-text">"Generative AI transforms software test automation across 6 key enterprise dimensions: 1. Automated Test Case Generation from user stories. 2. Synthetic Test Data Creation without PII leakage. 3. Intelligent Bug Detection and stack trace analysis. 4. Natural Language Scripting for Selenium/Playwright. 5. Continuous CI/CD Self-Healing automation. 6. Adaptive SLA & Voice Quality Verification."</div>
+                    </div>
+                </div>
+
+                <div class="metrics-bar">
+                    <div class="metric-pill good">
+                        <span>Correctness:</span> <strong>0.97</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>Relevancy:</span> <strong>0.98</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>Hallucination:</span> <strong>0.02</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>WER:</span> <strong>0.0</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>CER:</span> <strong>0.0</strong>
+                    </div>
+                    <div class="metric-pill">
+                        <span>STT Latency:</span> <strong>0.79s</strong>
+                    </div>
+                    <div class="metric-pill">
+                        <span>LLM Latency:</span> <strong>1.62s</strong>
+                    </div>
+                    <div class="metric-pill">
+                        <span>TTS Latency:</span> <strong>2.45s</strong>
+                    </div>
+                    <div class="metric-pill" style="background: rgba(0, 242, 254, 0.1); border-color: var(--accent-cyan);">
+                        <span>Total Latency:</span> <strong style="color: var(--accent-cyan);">4.86s</strong>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="scenario-card" data-status="PASS" data-category="Banking">
+                <div class="scenario-header">
+                    <div class="scenario-title">
+                        🏦 Checking Account Balance Inquiry
+                        <span class="scenario-id">BANKING_001</span>
+                    </div>
+                    <div class="badge pass">
+                        PASS
+                    </div>
+                </div>
+
+                <div class="dialogue-grid">
+                    <div class="dialogue-box">
+                        <div class="dialogue-label">👤 User Spoke (Transcribed by Whisper)</div>
+                        <div class="dialogue-text">"Hi, I would like to check the current balance on my primary checking account."</div>
+                    </div>
+                    <div class="dialogue-box">
+                        <div class="dialogue-label">🤖 Chatbot Voice Answer (Synthesized by TTS)</div>
+                        <div class="dialogue-text">"Hello! I can certainly help you with your account summary. Your primary checking account ending in 4321 has a current available balance of $4,850.25."</div>
+                    </div>
+                </div>
+
+                <div class="metrics-bar">
+                    <div class="metric-pill good">
+                        <span>Correctness:</span> <strong>0.96</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>Relevancy:</span> <strong>0.95</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>Hallucination:</span> <strong>0.03</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>WER:</span> <strong>0.0</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>CER:</span> <strong>0.0</strong>
+                    </div>
+                    <div class="metric-pill">
+                        <span>STT Latency:</span> <strong>0.82s</strong>
+                    </div>
+                    <div class="metric-pill">
+                        <span>LLM Latency:</span> <strong>1.51s</strong>
+                    </div>
+                    <div class="metric-pill">
+                        <span>TTS Latency:</span> <strong>2.59s</strong>
+                    </div>
+                    <div class="metric-pill" style="background: rgba(0, 242, 254, 0.1); border-color: var(--accent-cyan);">
+                        <span>Total Latency:</span> <strong style="color: var(--accent-cyan);">4.92s</strong>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="scenario-card" data-status="PASS" data-category="Banking">
+                <div class="scenario-header">
+                    <div class="scenario-title">
+                        🏦 Emergency Debit Card Freeze
+                        <span class="scenario-id">BANKING_002</span>
+                    </div>
+                    <div class="badge pass">
+                        PASS
+                    </div>
+                </div>
+
+                <div class="dialogue-grid">
+                    <div class="dialogue-box">
+                        <div class="dialogue-label">👤 User Spoke (Transcribed by Whisper)</div>
+                        <div class="dialogue-text">"I think I left my debit card at a restaurant and need to freeze it immediately."</div>
+                    </div>
+                    <div class="dialogue-box">
+                        <div class="dialogue-label">🤖 Chatbot Voice Answer (Synthesized by TTS)</div>
+                        <div class="dialogue-text">"I understand your concern and have immediately applied a temporary security freeze on your debit card ending in 8890. No new purchases or ATM withdrawals can be made."</div>
+                    </div>
+                </div>
+
+                <div class="metrics-bar">
+                    <div class="metric-pill good">
+                        <span>Correctness:</span> <strong>0.88</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>Relevancy:</span> <strong>0.94</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>Hallucination:</span> <strong>0.08</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>WER:</span> <strong>0.05</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>CER:</span> <strong>0.03</strong>
+                    </div>
+                    <div class="metric-pill">
+                        <span>STT Latency:</span> <strong>1.05s</strong>
+                    </div>
+                    <div class="metric-pill">
+                        <span>LLM Latency:</span> <strong>1.18s</strong>
+                    </div>
+                    <div class="metric-pill">
+                        <span>TTS Latency:</span> <strong>2.79s</strong>
+                    </div>
+                    <div class="metric-pill" style="background: rgba(0, 242, 254, 0.1); border-color: var(--accent-cyan);">
+                        <span>Total Latency:</span> <strong style="color: var(--accent-cyan);">5.02s</strong>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="scenario-card" data-status="PASS" data-category="Banking">
+                <div class="scenario-header">
+                    <div class="scenario-title">
+                        🏦 International Wire Transfer Fee Inquiry
+                        <span class="scenario-id">BANKING_003</span>
+                    </div>
+                    <div class="badge pass">
+                        PASS
+                    </div>
+                </div>
+
+                <div class="dialogue-grid">
+                    <div class="dialogue-box">
+                        <div class="dialogue-label">👤 User Spoke (Transcribed by Whisper)</div>
+                        <div class="dialogue-text">"What is the fee and cutoff time for sending an international wire transfer to Germany in Euros?"</div>
+                    </div>
+                    <div class="dialogue-box">
+                        <div class="dialogue-label">🤖 Chatbot Voice Answer (Synthesized by TTS)</div>
+                        <div class="dialogue-text">"For international wire transfers sent in foreign currency like Euros, our transfer fee is $35.00, and the daily processing cutoff time is 4:00 PM Eastern Time."</div>
+                    </div>
+                </div>
+
+                <div class="metrics-bar">
+                    <div class="metric-pill good">
+                        <span>Correctness:</span> <strong>0.92</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>Relevancy:</span> <strong>0.94</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>Hallucination:</span> <strong>0.07</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>WER:</span> <strong>0.0</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>CER:</span> <strong>0.0</strong>
+                    </div>
+                    <div class="metric-pill">
+                        <span>STT Latency:</span> <strong>1.04s</strong>
+                    </div>
+                    <div class="metric-pill">
+                        <span>LLM Latency:</span> <strong>1.67s</strong>
+                    </div>
+                    <div class="metric-pill">
+                        <span>TTS Latency:</span> <strong>1.86s</strong>
+                    </div>
+                    <div class="metric-pill" style="background: rgba(0, 242, 254, 0.1); border-color: var(--accent-cyan);">
+                        <span>Total Latency:</span> <strong style="color: var(--accent-cyan);">4.57s</strong>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="scenario-card" data-status="PASS" data-category="Banking">
+                <div class="scenario-header">
+                    <div class="scenario-title">
+                        🏦 Mortgage Loan Auto-Pay Setup
+                        <span class="scenario-id">BANKING_004</span>
+                    </div>
+                    <div class="badge pass">
+                        PASS
+                    </div>
+                </div>
+
+                <div class="dialogue-grid">
+                    <div class="dialogue-box">
+                        <div class="dialogue-label">👤 User Spoke (Transcribed by Whisper)</div>
+                        <div class="dialogue-text">"When is my next residential mortgage installment due, and what is the exact amount?"</div>
+                    </div>
+                    <div class="dialogue-box">
+                        <div class="dialogue-label">🤖 Chatbot Voice Answer (Synthesized by TTS)</div>
+                        <div class="dialogue-text">"Your next mortgage installment for loan ending in 1102 is due on August 1st, and the total monthly payment amount is $2,145.80 including escrow."</div>
+                    </div>
+                </div>
+
+                <div class="metrics-bar">
+                    <div class="metric-pill good">
+                        <span>Correctness:</span> <strong>0.91</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>Relevancy:</span> <strong>0.9</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>Hallucination:</span> <strong>0.06</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>WER:</span> <strong>0.05</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>CER:</span> <strong>0.03</strong>
+                    </div>
+                    <div class="metric-pill">
+                        <span>STT Latency:</span> <strong>0.8s</strong>
+                    </div>
+                    <div class="metric-pill">
+                        <span>LLM Latency:</span> <strong>1.15s</strong>
+                    </div>
+                    <div class="metric-pill">
+                        <span>TTS Latency:</span> <strong>2.73s</strong>
+                    </div>
+                    <div class="metric-pill" style="background: rgba(0, 242, 254, 0.1); border-color: var(--accent-cyan);">
+                        <span>Total Latency:</span> <strong style="color: var(--accent-cyan);">4.68s</strong>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="scenario-card" data-status="PASS" data-category="Banking">
+                <div class="scenario-header">
+                    <div class="scenario-title">
+                        🏦 Unrecognized Charge Dispute
+                        <span class="scenario-id">BANKING_005</span>
+                    </div>
+                    <div class="badge pass">
+                        PASS
+                    </div>
+                </div>
+
+                <div class="dialogue-grid">
+                    <div class="dialogue-box">
+                        <div class="dialogue-label">👤 User Spoke (Transcribed by Whisper)</div>
+                        <div class="dialogue-text">"I see an unknown charge of $129.99 from 'TechCloud Solutions' on my credit card statement yesterday that I did not authorize."</div>
+                    </div>
+                    <div class="dialogue-box">
+                        <div class="dialogue-label">🤖 Chatbot Voice Answer (Synthesized by TTS)</div>
+                        <div class="dialogue-text">"I am sorry to hear about this unauthorized charge. I have initiated a formal dispute for the $129.99 transaction from TechCloud Solutions and blocked the merchant from further billing."</div>
+                    </div>
+                </div>
+
+                <div class="metrics-bar">
+                    <div class="metric-pill good">
+                        <span>Correctness:</span> <strong>0.95</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>Relevancy:</span> <strong>0.96</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>Hallucination:</span> <strong>0.04</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>WER:</span> <strong>0.03</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>CER:</span> <strong>0.01</strong>
+                    </div>
+                    <div class="metric-pill">
+                        <span>STT Latency:</span> <strong>0.99s</strong>
+                    </div>
+                    <div class="metric-pill">
+                        <span>LLM Latency:</span> <strong>1.67s</strong>
+                    </div>
+                    <div class="metric-pill">
+                        <span>TTS Latency:</span> <strong>2.38s</strong>
+                    </div>
+                    <div class="metric-pill" style="background: rgba(0, 242, 254, 0.1); border-color: var(--accent-cyan);">
+                        <span>Total Latency:</span> <strong style="color: var(--accent-cyan);">5.04s</strong>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="scenario-card" data-status="PASS" data-category="Healthcare">
+                <div class="scenario-header">
+                    <div class="scenario-title">
+                        🏥 Primary Care Doctor Appointment
+                        <span class="scenario-id">HEALTHCARE_001</span>
+                    </div>
+                    <div class="badge pass">
+                        PASS
+                    </div>
+                </div>
+
+                <div class="dialogue-grid">
+                    <div class="dialogue-box">
+                        <div class="dialogue-label">👤 User Spoke (Transcribed by Whisper)</div>
+                        <div class="dialogue-text">"I need to book my annual physical exam next week with a female primary care doctor at the downtown clinic."</div>
+                    </div>
+                    <div class="dialogue-box">
+                        <div class="dialogue-label">🤖 Chatbot Voice Answer (Synthesized by TTS)</div>
+                        <div class="dialogue-text">"We have two excellent female internal medicine physicians at our Downtown Medical Center accepting appointments next week: Dr. Sarah Jenkins and Dr. Elena Rostova."</div>
+                    </div>
+                </div>
+
+                <div class="metrics-bar">
+                    <div class="metric-pill good">
+                        <span>Correctness:</span> <strong>0.99</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>Relevancy:</span> <strong>0.89</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>Hallucination:</span> <strong>0.07</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>WER:</span> <strong>0.02</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>CER:</span> <strong>0.01</strong>
+                    </div>
+                    <div class="metric-pill">
+                        <span>STT Latency:</span> <strong>0.92s</strong>
+                    </div>
+                    <div class="metric-pill">
+                        <span>LLM Latency:</span> <strong>1.62s</strong>
+                    </div>
+                    <div class="metric-pill">
+                        <span>TTS Latency:</span> <strong>2.52s</strong>
+                    </div>
+                    <div class="metric-pill" style="background: rgba(0, 242, 254, 0.1); border-color: var(--accent-cyan);">
+                        <span>Total Latency:</span> <strong style="color: var(--accent-cyan);">5.06s</strong>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="scenario-card" data-status="PASS" data-category="Healthcare">
+                <div class="scenario-header">
+                    <div class="scenario-title">
+                        🏥 Prescription Refill Request
+                        <span class="scenario-id">HEALTHCARE_002</span>
+                    </div>
+                    <div class="badge pass">
+                        PASS
+                    </div>
+                </div>
+
+                <div class="dialogue-grid">
+                    <div class="dialogue-box">
+                        <div class="dialogue-label">👤 User Spoke (Transcribed by Whisper)</div>
+                        <div class="dialogue-text">"I am running low on my 20mg Lisinopril blood pressure medication and need a refill sent to my pharmacy."</div>
+                    </div>
+                    <div class="dialogue-box">
+                        <div class="dialogue-label">🤖 Chatbot Voice Answer (Synthesized by TTS)</div>
+                        <div class="dialogue-text">"I can assist you with your medication refill. I see your active prescription for Lisinopril 20mg oral tablet, once daily, prescribed by Dr. Adams."</div>
+                    </div>
+                </div>
+
+                <div class="metrics-bar">
+                    <div class="metric-pill good">
+                        <span>Correctness:</span> <strong>0.99</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>Relevancy:</span> <strong>0.92</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>Hallucination:</span> <strong>0.03</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>WER:</span> <strong>0.0</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>CER:</span> <strong>0.0</strong>
+                    </div>
+                    <div class="metric-pill">
+                        <span>STT Latency:</span> <strong>1.01s</strong>
+                    </div>
+                    <div class="metric-pill">
+                        <span>LLM Latency:</span> <strong>1.31s</strong>
+                    </div>
+                    <div class="metric-pill">
+                        <span>TTS Latency:</span> <strong>2.5s</strong>
+                    </div>
+                    <div class="metric-pill" style="background: rgba(0, 242, 254, 0.1); border-color: var(--accent-cyan);">
+                        <span>Total Latency:</span> <strong style="color: var(--accent-cyan);">4.82s</strong>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="scenario-card" data-status="FAIL" data-category="Healthcare">
+                <div class="scenario-header">
+                    <div class="scenario-title">
+                        🏥 Mild Fever Clinical Triage
+                        <span class="scenario-id">HEALTHCARE_003</span>
+                    </div>
+                    <div class="badge fail">
+                        FAIL
+                    </div>
+                </div>
+
+                <div class="dialogue-grid">
+                    <div class="dialogue-box">
+                        <div class="dialogue-label">👤 User Spoke (Transcribed by Whisper)</div>
+                        <div class="dialogue-text">"I have had a fever of 101.2 and a scratchy sore throat since yesterday evening. Should I go to the emergency room?"</div>
+                    </div>
+                    <div class="dialogue-box">
+                        <div class="dialogue-label">🤖 Chatbot Voice Answer (Synthesized by TTS)</div>
+                        <div class="dialogue-text">"A fever of 101.2°F with a sore throat in an otherwise healthy adult generally does not require an emergency room visit unless accompanied by severe shortness of breath or inability to swallow. An urgent care visit or virtual visit is recommended if symptoms persist beyond 3 days."</div>
+                    </div>
+                </div>
+
+                <div class="metrics-bar">
+                    <div class="metric-pill warn">
+                        <span>Correctness:</span> <strong>0.75</strong>
+                    </div>
+                    <div class="metric-pill warn">
+                        <span>Relevancy:</span> <strong>0.73</strong>
+                    </div>
+                    <div class="metric-pill bad">
+                        <span>Hallucination:</span> <strong>0.27</strong>
+                    </div>
+                    <div class="metric-pill bad">
+                        <span>WER:</span> <strong>0.15</strong>
+                    </div>
+                    <div class="metric-pill bad">
+                        <span>CER:</span> <strong>0.07</strong>
+                    </div>
+                    <div class="metric-pill">
+                        <span>STT Latency:</span> <strong>0.86s</strong>
+                    </div>
+                    <div class="metric-pill">
+                        <span>LLM Latency:</span> <strong>1.23s</strong>
+                    </div>
+                    <div class="metric-pill">
+                        <span>TTS Latency:</span> <strong>2.66s</strong>
+                    </div>
+                    <div class="metric-pill" style="background: rgba(0, 242, 254, 0.1); border-color: var(--accent-cyan);">
+                        <span>Total Latency:</span> <strong style="color: var(--accent-cyan);">4.75s</strong>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 0.75rem; font-size: 0.85rem; color: var(--danger); background: rgba(255, 82, 82, 0.1); padding: 0.5rem 0.75rem; border-radius: 6px;">
+                    ⚠️ <strong>Reason:</strong> SLA Breach: WER (0.15) or Correctness (0.75) out of bounds.
+                </div>
+                
+            </div>
+            
+            <div class="scenario-card" data-status="PASS" data-category="Healthcare">
+                <div class="scenario-header">
+                    <div class="scenario-title">
+                        🏥 Specialist Consultation Copay Check
+                        <span class="scenario-id">HEALTHCARE_004</span>
+                    </div>
+                    <div class="badge pass">
+                        PASS
+                    </div>
+                </div>
+
+                <div class="dialogue-grid">
+                    <div class="dialogue-box">
+                        <div class="dialogue-label">👤 User Spoke (Transcribed by Whisper)</div>
+                        <div class="dialogue-text">"I need to see an orthopedic specialist for my knee. What is my consultation copay under my Gold PPO plan?"</div>
+                    </div>
+                    <div class="dialogue-box">
+                        <div class="dialogue-label">🤖 Chatbot Voice Answer (Synthesized by TTS)</div>
+                        <div class="dialogue-text">"Under your active Gold PPO health plan, in-network specialist office visits have a fixed copayment of $45.00 per consultation."</div>
+                    </div>
+                </div>
+
+                <div class="metrics-bar">
+                    <div class="metric-pill good">
+                        <span>Correctness:</span> <strong>0.96</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>Relevancy:</span> <strong>0.94</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>Hallucination:</span> <strong>0.02</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>WER:</span> <strong>0.05</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>CER:</span> <strong>0.03</strong>
+                    </div>
+                    <div class="metric-pill">
+                        <span>STT Latency:</span> <strong>0.63s</strong>
+                    </div>
+                    <div class="metric-pill">
+                        <span>LLM Latency:</span> <strong>1.4s</strong>
+                    </div>
+                    <div class="metric-pill">
+                        <span>TTS Latency:</span> <strong>1.87s</strong>
+                    </div>
+                    <div class="metric-pill" style="background: rgba(0, 242, 254, 0.1); border-color: var(--accent-cyan);">
+                        <span>Total Latency:</span> <strong style="color: var(--accent-cyan);">3.9s</strong>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="scenario-card" data-status="FAIL" data-category="Healthcare">
+                <div class="scenario-header">
+                    <div class="scenario-title">
+                        🏥 Patient Portal Lab Results Access
+                        <span class="scenario-id">HEALTHCARE_005</span>
+                    </div>
+                    <div class="badge fail">
+                        FAIL
+                    </div>
+                </div>
+
+                <div class="dialogue-grid">
+                    <div class="dialogue-box">
+                        <div class="dialogue-label">👤 User Spoke (Transcribed by Whisper)</div>
+                        <div class="dialogue-text">"My doctor said my routine blood test results from Tuesday are ready. How do I view them online?"</div>
+                    </div>
+                    <div class="dialogue-box">
+                        <div class="dialogue-label">🤖 Chatbot Voice Answer (Synthesized by TTS)</div>
+                        <div class="dialogue-text">"To view your blood test results, log into your MyHealth Patient Portal, click on the 'Health Records' menu on the left sidebar, and select 'Lab & Test Results'. Your CBC report from Tuesday is listed at the top."</div>
+                    </div>
+                </div>
+
+                <div class="metrics-bar">
+                    <div class="metric-pill warn">
+                        <span>Correctness:</span> <strong>0.75</strong>
+                    </div>
+                    <div class="metric-pill warn">
+                        <span>Relevancy:</span> <strong>0.71</strong>
+                    </div>
+                    <div class="metric-pill bad">
+                        <span>Hallucination:</span> <strong>0.3</strong>
+                    </div>
+                    <div class="metric-pill bad">
+                        <span>WER:</span> <strong>0.18</strong>
+                    </div>
+                    <div class="metric-pill bad">
+                        <span>CER:</span> <strong>0.09</strong>
+                    </div>
+                    <div class="metric-pill">
+                        <span>STT Latency:</span> <strong>0.96s</strong>
+                    </div>
+                    <div class="metric-pill">
+                        <span>LLM Latency:</span> <strong>1.4s</strong>
+                    </div>
+                    <div class="metric-pill">
+                        <span>TTS Latency:</span> <strong>1.86s</strong>
+                    </div>
+                    <div class="metric-pill" style="background: rgba(0, 242, 254, 0.1); border-color: var(--accent-cyan);">
+                        <span>Total Latency:</span> <strong style="color: var(--accent-cyan);">4.22s</strong>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 0.75rem; font-size: 0.85rem; color: var(--danger); background: rgba(255, 82, 82, 0.1); padding: 0.5rem 0.75rem; border-radius: 6px;">
+                    ⚠️ <strong>Reason:</strong> SLA Breach: WER (0.18) or Correctness (0.75) out of bounds.
+                </div>
+                
+            </div>
+            
+            <div class="scenario-card" data-status="PASS" data-category="Insurance">
+                <div class="scenario-header">
+                    <div class="scenario-title">
+                        🛡️ Auto Collision Claim Filing
+                        <span class="scenario-id">INSURANCE_001</span>
+                    </div>
+                    <div class="badge pass">
+                        PASS
+                    </div>
+                </div>
+
+                <div class="dialogue-grid">
+                    <div class="dialogue-box">
+                        <div class="dialogue-label">👤 User Spoke (Transcribed by Whisper)</div>
+                        <div class="dialogue-text">"I was involved in a minor fender bender about an hour ago. Thankfully no one was injured, but I need to file a claim for my front bumper."</div>
+                    </div>
+                    <div class="dialogue-box">
+                        <div class="dialogue-label">🤖 Chatbot Voice Answer (Synthesized by TTS)</div>
+                        <div class="dialogue-text">"I am glad to hear that no one was injured. I have created claim number CL-99201 under your policy for the front bumper collision damage."</div>
+                    </div>
+                </div>
+
+                <div class="metrics-bar">
+                    <div class="metric-pill good">
+                        <span>Correctness:</span> <strong>0.96</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>Relevancy:</span> <strong>0.93</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>Hallucination:</span> <strong>0.05</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>WER:</span> <strong>0.05</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>CER:</span> <strong>0.03</strong>
+                    </div>
+                    <div class="metric-pill">
+                        <span>STT Latency:</span> <strong>0.97s</strong>
+                    </div>
+                    <div class="metric-pill">
+                        <span>LLM Latency:</span> <strong>1.35s</strong>
+                    </div>
+                    <div class="metric-pill">
+                        <span>TTS Latency:</span> <strong>2.24s</strong>
+                    </div>
+                    <div class="metric-pill" style="background: rgba(0, 242, 254, 0.1); border-color: var(--accent-cyan);">
+                        <span>Total Latency:</span> <strong style="color: var(--accent-cyan);">4.56s</strong>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="scenario-card" data-status="PASS" data-category="Insurance">
+                <div class="scenario-header">
+                    <div class="scenario-title">
+                        🛡️ Emergency Roadside Dispatch
+                        <span class="scenario-id">INSURANCE_002</span>
+                    </div>
+                    <div class="badge pass">
+                        PASS
+                    </div>
+                </div>
+
+                <div class="dialogue-grid">
+                    <div class="dialogue-box">
+                        <div class="dialogue-label">👤 User Spoke (Transcribed by Whisper)</div>
+                        <div class="dialogue-text">"I am stranded on Interstate 95 North near exit 14 with a flat tire. I need roadside assistance right away."</div>
+                    </div>
+                    <div class="dialogue-box">
+                        <div class="dialogue-label">🤖 Chatbot Voice Answer (Synthesized by TTS)</div>
+                        <div class="dialogue-text">"Please ensure your hazard lights are on and you are waiting in a safe location away from traffic. I have dispatched our roadside partner, Express Towing, to I-95 North near exit 14 under dispatch ID RD-4412."</div>
+                    </div>
+                </div>
+
+                <div class="metrics-bar">
+                    <div class="metric-pill good">
+                        <span>Correctness:</span> <strong>0.93</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>Relevancy:</span> <strong>0.91</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>Hallucination:</span> <strong>0.07</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>WER:</span> <strong>0.06</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>CER:</span> <strong>0.03</strong>
+                    </div>
+                    <div class="metric-pill">
+                        <span>STT Latency:</span> <strong>0.77s</strong>
+                    </div>
+                    <div class="metric-pill">
+                        <span>LLM Latency:</span> <strong>1.25s</strong>
+                    </div>
+                    <div class="metric-pill">
+                        <span>TTS Latency:</span> <strong>2.25s</strong>
+                    </div>
+                    <div class="metric-pill" style="background: rgba(0, 242, 254, 0.1); border-color: var(--accent-cyan);">
+                        <span>Total Latency:</span> <strong style="color: var(--accent-cyan);">4.27s</strong>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="scenario-card" data-status="PASS" data-category="Insurance">
+                <div class="scenario-header">
+                    <div class="scenario-title">
+                        🛡️ Collision Deductible Adjustment
+                        <span class="scenario-id">INSURANCE_003</span>
+                    </div>
+                    <div class="badge pass">
+                        PASS
+                    </div>
+                </div>
+
+                <div class="dialogue-grid">
+                    <div class="dialogue-box">
+                        <div class="dialogue-label">👤 User Spoke (Transcribed by Whisper)</div>
+                        <div class="dialogue-text">"What is my current collision deductible on my 2022 Honda Accord?"</div>
+                    </div>
+                    <div class="dialogue-box">
+                        <div class="dialogue-label">🤖 Chatbot Voice Answer (Synthesized by TTS)</div>
+                        <div class="dialogue-text">"Your current collision coverage deductible for the 2022 Honda Accord is set at $500.00."</div>
+                    </div>
+                </div>
+
+                <div class="metrics-bar">
+                    <div class="metric-pill good">
+                        <span>Correctness:</span> <strong>0.94</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>Relevancy:</span> <strong>0.95</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>Hallucination:</span> <strong>0.08</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>WER:</span> <strong>0.01</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>CER:</span> <strong>0.01</strong>
+                    </div>
+                    <div class="metric-pill">
+                        <span>STT Latency:</span> <strong>1.02s</strong>
+                    </div>
+                    <div class="metric-pill">
+                        <span>LLM Latency:</span> <strong>1.64s</strong>
+                    </div>
+                    <div class="metric-pill">
+                        <span>TTS Latency:</span> <strong>2.47s</strong>
+                    </div>
+                    <div class="metric-pill" style="background: rgba(0, 242, 254, 0.1); border-color: var(--accent-cyan);">
+                        <span>Total Latency:</span> <strong style="color: var(--accent-cyan);">5.13s</strong>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="scenario-card" data-status="PASS" data-category="Insurance">
+                <div class="scenario-header">
+                    <div class="scenario-title">
+                        🛡️ Homeowners Water Damage Coverage
+                        <span class="scenario-id">INSURANCE_004</span>
+                    </div>
+                    <div class="badge pass">
+                        PASS
+                    </div>
+                </div>
+
+                <div class="dialogue-grid">
+                    <div class="dialogue-box">
+                        <div class="dialogue-label">👤 User Spoke (Transcribed by Whisper)</div>
+                        <div class="dialogue-text">"A kitchen pipe suddenly burst this morning and soaked my hardwood floors. Is water damage from a burst plumbing pipe covered by my homeowners policy?"</div>
+                    </div>
+                    <div class="dialogue-box">
+                        <div class="dialogue-label">🤖 Chatbot Voice Answer (Synthesized by TTS)</div>
+                        <div class="dialogue-text">"Yes, under your standard HO-3 Homeowners policy, sudden and accidental water discharge from a broken internal plumbing pipe is covered for interior damage, including drying and replacing your hardwood floors, subject to your $1,000 deductible."</div>
+                    </div>
+                </div>
+
+                <div class="metrics-bar">
+                    <div class="metric-pill good">
+                        <span>Correctness:</span> <strong>0.95</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>Relevancy:</span> <strong>0.95</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>Hallucination:</span> <strong>0.06</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>WER:</span> <strong>0.07</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>CER:</span> <strong>0.04</strong>
+                    </div>
+                    <div class="metric-pill">
+                        <span>STT Latency:</span> <strong>0.98s</strong>
+                    </div>
+                    <div class="metric-pill">
+                        <span>LLM Latency:</span> <strong>1.48s</strong>
+                    </div>
+                    <div class="metric-pill">
+                        <span>TTS Latency:</span> <strong>1.88s</strong>
+                    </div>
+                    <div class="metric-pill" style="background: rgba(0, 242, 254, 0.1); border-color: var(--accent-cyan);">
+                        <span>Total Latency:</span> <strong style="color: var(--accent-cyan);">4.34s</strong>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="scenario-card" data-status="PASS" data-category="Insurance">
+                <div class="scenario-header">
+                    <div class="scenario-title">
+                        🛡️ Adding Teenage Driver to Policy
+                        <span class="scenario-id">INSURANCE_005</span>
+                    </div>
+                    <div class="badge pass">
+                        PASS
+                    </div>
+                </div>
+
+                <div class="dialogue-grid">
+                    <div class="dialogue-box">
+                        <div class="dialogue-label">👤 User Spoke (Transcribed by Whisper)</div>
+                        <div class="dialogue-text">"My daughter just passed her driving test and got her driver's license today. How do I add her to our auto policy?"</div>
+                    </div>
+                    <div class="dialogue-box">
+                        <div class="dialogue-label">🤖 Chatbot Voice Answer (Synthesized by TTS)</div>
+                        <div class="dialogue-text">"Congratulations to your daughter! To add her as a listed driver, I will need her full legal name, date of birth, and her new driver's license number. We can add her effective immediately today."</div>
+                    </div>
+                </div>
+
+                <div class="metrics-bar">
+                    <div class="metric-pill good">
+                        <span>Correctness:</span> <strong>0.91</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>Relevancy:</span> <strong>0.9</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>Hallucination:</span> <strong>0.06</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>WER:</span> <strong>0.04</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>CER:</span> <strong>0.02</strong>
+                    </div>
+                    <div class="metric-pill">
+                        <span>STT Latency:</span> <strong>0.97s</strong>
+                    </div>
+                    <div class="metric-pill">
+                        <span>LLM Latency:</span> <strong>1.52s</strong>
+                    </div>
+                    <div class="metric-pill">
+                        <span>TTS Latency:</span> <strong>2.55s</strong>
+                    </div>
+                    <div class="metric-pill" style="background: rgba(0, 242, 254, 0.1); border-color: var(--accent-cyan);">
+                        <span>Total Latency:</span> <strong style="color: var(--accent-cyan);">5.04s</strong>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="scenario-card" data-status="PASS" data-category="Travel">
+                <div class="scenario-header">
+                    <div class="scenario-title">
+                        ✈️ Weather Flight Cancellation Rebooking
+                        <span class="scenario-id">TRAVEL_001</span>
+                    </div>
+                    <div class="badge pass">
+                        PASS
+                    </div>
+                </div>
+
+                <div class="dialogue-grid">
+                    <div class="dialogue-box">
+                        <div class="dialogue-label">👤 User Spoke (Transcribed by Whisper)</div>
+                        <div class="dialogue-text">"My flight AA-405 to Chicago tonight was just cancelled because of storms. I need to get to Chicago as early as possible tomorrow morning."</div>
+                    </div>
+                    <div class="dialogue-box">
+                        <div class="dialogue-label">🤖 Chatbot Voice Answer (Synthesized by TTS)</div>
+                        <div class="dialogue-text">"I apologize for the disruption caused by the weather. I have confirmed two open seats on flight AA-102 departing tomorrow morning at 6:30 AM, arriving in Chicago at 8:15 AM. Shall I confirm you on this flight?"</div>
+                    </div>
+                </div>
+
+                <div class="metrics-bar">
+                    <div class="metric-pill good">
+                        <span>Correctness:</span> <strong>0.94</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>Relevancy:</span> <strong>0.9</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>Hallucination:</span> <strong>0.07</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>WER:</span> <strong>0.0</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>CER:</span> <strong>0.0</strong>
+                    </div>
+                    <div class="metric-pill">
+                        <span>STT Latency:</span> <strong>0.85s</strong>
+                    </div>
+                    <div class="metric-pill">
+                        <span>LLM Latency:</span> <strong>1.29s</strong>
+                    </div>
+                    <div class="metric-pill">
+                        <span>TTS Latency:</span> <strong>2.79s</strong>
+                    </div>
+                    <div class="metric-pill" style="background: rgba(0, 242, 254, 0.1); border-color: var(--accent-cyan);">
+                        <span>Total Latency:</span> <strong style="color: var(--accent-cyan);">4.93s</strong>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="scenario-card" data-status="PASS" data-category="Travel">
+                <div class="scenario-header">
+                    <div class="scenario-title">
+                        ✈️ International Checked Baggage Allowance
+                        <span class="scenario-id">TRAVEL_002</span>
+                    </div>
+                    <div class="badge pass">
+                        PASS
+                    </div>
+                </div>
+
+                <div class="dialogue-grid">
+                    <div class="dialogue-box">
+                        <div class="dialogue-label">👤 User Spoke (Transcribed by Whisper)</div>
+                        <div class="dialogue-text">"How many checked bags are included in my Economy ticket from San Francisco to Tokyo, and what is the weight limit?"</div>
+                    </div>
+                    <div class="dialogue-box">
+                        <div class="dialogue-label">🤖 Chatbot Voice Answer (Synthesized by TTS)</div>
+                        <div class="dialogue-text">"For international Economy flights from San Francisco to Tokyo, your ticket includes two complimentary checked bags, each weighing up to 50 pounds (23 kg) with maximum linear dimensions of 62 inches."</div>
+                    </div>
+                </div>
+
+                <div class="metrics-bar">
+                    <div class="metric-pill good">
+                        <span>Correctness:</span> <strong>0.96</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>Relevancy:</span> <strong>0.91</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>Hallucination:</span> <strong>0.08</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>WER:</span> <strong>0.04</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>CER:</span> <strong>0.02</strong>
+                    </div>
+                    <div class="metric-pill">
+                        <span>STT Latency:</span> <strong>0.91s</strong>
+                    </div>
+                    <div class="metric-pill">
+                        <span>LLM Latency:</span> <strong>1.29s</strong>
+                    </div>
+                    <div class="metric-pill">
+                        <span>TTS Latency:</span> <strong>1.98s</strong>
+                    </div>
+                    <div class="metric-pill" style="background: rgba(0, 242, 254, 0.1); border-color: var(--accent-cyan);">
+                        <span>Total Latency:</span> <strong style="color: var(--accent-cyan);">4.18s</strong>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="scenario-card" data-status="PASS" data-category="Travel">
+                <div class="scenario-header">
+                    <div class="scenario-title">
+                        ✈️ Resort Check-In Date Modification
+                        <span class="scenario-id">TRAVEL_003</span>
+                    </div>
+                    <div class="badge pass">
+                        PASS
+                    </div>
+                </div>
+
+                <div class="dialogue-grid">
+                    <div class="dialogue-box">
+                        <div class="dialogue-label">👤 User Spoke (Transcribed by Whisper)</div>
+                        <div class="dialogue-text">"I need to change my arrival date for reservation RES-7712 at the Seaside Resort from August 12th to August 14th."</div>
+                    </div>
+                    <div class="dialogue-box">
+                        <div class="dialogue-label">🤖 Chatbot Voice Answer (Synthesized by TTS)</div>
+                        <div class="dialogue-text">"I have retrieved your reservation RES-7712 for an Oceanfront King Room. We have availability starting August 14th for a 4-night stay, and I have updated your arrival date accordingly."</div>
+                    </div>
+                </div>
+
+                <div class="metrics-bar">
+                    <div class="metric-pill good">
+                        <span>Correctness:</span> <strong>0.96</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>Relevancy:</span> <strong>0.95</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>Hallucination:</span> <strong>0.02</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>WER:</span> <strong>0.05</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>CER:</span> <strong>0.03</strong>
+                    </div>
+                    <div class="metric-pill">
+                        <span>STT Latency:</span> <strong>0.62s</strong>
+                    </div>
+                    <div class="metric-pill">
+                        <span>LLM Latency:</span> <strong>1.38s</strong>
+                    </div>
+                    <div class="metric-pill">
+                        <span>TTS Latency:</span> <strong>2.77s</strong>
+                    </div>
+                    <div class="metric-pill" style="background: rgba(0, 242, 254, 0.1); border-color: var(--accent-cyan);">
+                        <span>Total Latency:</span> <strong style="color: var(--accent-cyan);">4.77s</strong>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="scenario-card" data-status="PASS" data-category="Travel">
+                <div class="scenario-header">
+                    <div class="scenario-title">
+                        ✈️ Frequent Flyer Upgrade Redemption
+                        <span class="scenario-id">TRAVEL_004</span>
+                    </div>
+                    <div class="badge pass">
+                        PASS
+                    </div>
+                </div>
+
+                <div class="dialogue-grid">
+                    <div class="dialogue-box">
+                        <div class="dialogue-label">👤 User Spoke (Transcribed by Whisper)</div>
+                        <div class="dialogue-text">"I have 65,000 frequent flyer miles. How many miles does it cost to upgrade my flight from New York to Los Angeles to Business Class?"</div>
+                    </div>
+                    <div class="dialogue-box">
+                        <div class="dialogue-label">🤖 Chatbot Voice Answer (Synthesized by TTS)</div>
+                        <div class="dialogue-text">"A one-way upgrade from Economy to Business Class on our transcontinental New York to Los Angeles route requires 25,000 reward miles plus a $75.00 taxes and carrier copay."</div>
+                    </div>
+                </div>
+
+                <div class="metrics-bar">
+                    <div class="metric-pill good">
+                        <span>Correctness:</span> <strong>0.94</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>Relevancy:</span> <strong>0.99</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>Hallucination:</span> <strong>0.06</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>WER:</span> <strong>0.02</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>CER:</span> <strong>0.01</strong>
+                    </div>
+                    <div class="metric-pill">
+                        <span>STT Latency:</span> <strong>1.03s</strong>
+                    </div>
+                    <div class="metric-pill">
+                        <span>LLM Latency:</span> <strong>1.41s</strong>
+                    </div>
+                    <div class="metric-pill">
+                        <span>TTS Latency:</span> <strong>1.8s</strong>
+                    </div>
+                    <div class="metric-pill" style="background: rgba(0, 242, 254, 0.1); border-color: var(--accent-cyan);">
+                        <span>Total Latency:</span> <strong style="color: var(--accent-cyan);">4.24s</strong>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="scenario-card" data-status="PASS" data-category="Travel">
+                <div class="scenario-header">
+                    <div class="scenario-title">
+                        ✈️ Special Dietary Meal Request
+                        <span class="scenario-id">TRAVEL_005</span>
+                    </div>
+                    <div class="badge pass">
+                        PASS
+                    </div>
+                </div>
+
+                <div class="dialogue-grid">
+                    <div class="dialogue-box">
+                        <div class="dialogue-label">👤 User Spoke (Transcribed by Whisper)</div>
+                        <div class="dialogue-text">"I am flying to London next Tuesday on booking reference K92P1X. I need to request a strict vegan meal for my flight."</div>
+                    </div>
+                    <div class="dialogue-box">
+                        <div class="dialogue-label">🤖 Chatbot Voice Answer (Synthesized by TTS)</div>
+                        <div class="dialogue-text">"I have accessed booking K92P1X and successfully added a Vegan Vegetarian Meal (VGML) special request to your seat assignment for your flight to London."</div>
+                    </div>
+                </div>
+
+                <div class="metrics-bar">
+                    <div class="metric-pill good">
+                        <span>Correctness:</span> <strong>0.88</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>Relevancy:</span> <strong>0.95</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>Hallucination:</span> <strong>0.06</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>WER:</span> <strong>0.08</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>CER:</span> <strong>0.04</strong>
+                    </div>
+                    <div class="metric-pill">
+                        <span>STT Latency:</span> <strong>0.99s</strong>
+                    </div>
+                    <div class="metric-pill">
+                        <span>LLM Latency:</span> <strong>1.3s</strong>
+                    </div>
+                    <div class="metric-pill">
+                        <span>TTS Latency:</span> <strong>2.12s</strong>
+                    </div>
+                    <div class="metric-pill" style="background: rgba(0, 242, 254, 0.1); border-color: var(--accent-cyan);">
+                        <span>Total Latency:</span> <strong style="color: var(--accent-cyan);">4.41s</strong>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="scenario-card" data-status="PASS" data-category="E-commerce">
+                <div class="scenario-header">
+                    <div class="scenario-title">
+                        🛒 Delayed Package Order Tracking
+                        <span class="scenario-id">ECOMMERCE_001</span>
+                    </div>
+                    <div class="badge pass">
+                        PASS
+                    </div>
+                </div>
+
+                <div class="dialogue-grid">
+                    <div class="dialogue-box">
+                        <div class="dialogue-label">👤 User Spoke (Transcribed by Whisper)</div>
+                        <div class="dialogue-text">"My order #ORD-5541 was supposed to arrive yesterday, but I haven't received it yet. Can you check where it is?"</div>
+                    </div>
+                    <div class="dialogue-box">
+                        <div class="dialogue-label">🤖 Chatbot Voice Answer (Synthesized by TTS)</div>
+                        <div class="dialogue-text">"I apologize for the delivery delay. I checked order #ORD-5541, and it is currently out for delivery today with an estimated arrival between 2:00 PM and 5:00 PM."</div>
+                    </div>
+                </div>
+
+                <div class="metrics-bar">
+                    <div class="metric-pill good">
+                        <span>Correctness:</span> <strong>0.98</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>Relevancy:</span> <strong>0.99</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>Hallucination:</span> <strong>0.03</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>WER:</span> <strong>0.01</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>CER:</span> <strong>0.01</strong>
+                    </div>
+                    <div class="metric-pill">
+                        <span>STT Latency:</span> <strong>0.67s</strong>
+                    </div>
+                    <div class="metric-pill">
+                        <span>LLM Latency:</span> <strong>1.54s</strong>
+                    </div>
+                    <div class="metric-pill">
+                        <span>TTS Latency:</span> <strong>1.88s</strong>
+                    </div>
+                    <div class="metric-pill" style="background: rgba(0, 242, 254, 0.1); border-color: var(--accent-cyan);">
+                        <span>Total Latency:</span> <strong style="color: var(--accent-cyan);">4.09s</strong>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="scenario-card" data-status="PASS" data-category="E-commerce">
+                <div class="scenario-header">
+                    <div class="scenario-title">
+                        🛒 Defective Item Return Authorization
+                        <span class="scenario-id">ECOMMERCE_002</span>
+                    </div>
+                    <div class="badge pass">
+                        PASS
+                    </div>
+                </div>
+
+                <div class="dialogue-grid">
+                    <div class="dialogue-box">
+                        <div class="dialogue-label">👤 User Spoke (Transcribed by Whisper)</div>
+                        <div class="dialogue-text">"I received my order #ORD-8812 yesterday, but the wireless speaker won't turn on or hold a charge. I want to return it for a refund."</div>
+                    </div>
+                    <div class="dialogue-box">
+                        <div class="dialogue-label">🤖 Chatbot Voice Answer (Synthesized by TTS)</div>
+                        <div class="dialogue-text">"I am very sorry that your speaker arrived defective. I have authorized a return for order #ORD-8812 and emailed a prepaid UPS return shipping label to your account address."</div>
+                    </div>
+                </div>
+
+                <div class="metrics-bar">
+                    <div class="metric-pill good">
+                        <span>Correctness:</span> <strong>0.92</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>Relevancy:</span> <strong>0.96</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>Hallucination:</span> <strong>0.06</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>WER:</span> <strong>0.08</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>CER:</span> <strong>0.04</strong>
+                    </div>
+                    <div class="metric-pill">
+                        <span>STT Latency:</span> <strong>1.01s</strong>
+                    </div>
+                    <div class="metric-pill">
+                        <span>LLM Latency:</span> <strong>1.8s</strong>
+                    </div>
+                    <div class="metric-pill">
+                        <span>TTS Latency:</span> <strong>1.85s</strong>
+                    </div>
+                    <div class="metric-pill" style="background: rgba(0, 242, 254, 0.1); border-color: var(--accent-cyan);">
+                        <span>Total Latency:</span> <strong style="color: var(--accent-cyan);">4.66s</strong>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="scenario-card" data-status="PASS" data-category="E-commerce">
+                <div class="scenario-header">
+                    <div class="scenario-title">
+                        🛒 Pre-Shipment Address Update
+                        <span class="scenario-id">ECOMMERCE_003</span>
+                    </div>
+                    <div class="badge pass">
+                        PASS
+                    </div>
+                </div>
+
+                <div class="dialogue-grid">
+                    <div class="dialogue-box">
+                        <div class="dialogue-label">👤 User Spoke (Transcribed by Whisper)</div>
+                        <div class="dialogue-text">"I just placed order #ORD-3309 half an hour ago, but I accidentally typed street number 412 instead of 421. Can you fix the shipping address?"</div>
+                    </div>
+                    <div class="dialogue-box">
+                        <div class="dialogue-label">🤖 Chatbot Voice Answer (Synthesized by TTS)</div>
+                        <div class="dialogue-text">"I have located order #ORD-3309. Since it is currently in 'Processing' status and has not yet left our fulfillment center, I have successfully updated your shipping address to 421 Elm Street."</div>
+                    </div>
+                </div>
+
+                <div class="metrics-bar">
+                    <div class="metric-pill good">
+                        <span>Correctness:</span> <strong>0.94</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>Relevancy:</span> <strong>0.92</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>Hallucination:</span> <strong>0.04</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>WER:</span> <strong>0.02</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>CER:</span> <strong>0.01</strong>
+                    </div>
+                    <div class="metric-pill">
+                        <span>STT Latency:</span> <strong>0.96s</strong>
+                    </div>
+                    <div class="metric-pill">
+                        <span>LLM Latency:</span> <strong>1.77s</strong>
+                    </div>
+                    <div class="metric-pill">
+                        <span>TTS Latency:</span> <strong>1.86s</strong>
+                    </div>
+                    <div class="metric-pill" style="background: rgba(0, 242, 254, 0.1); border-color: var(--accent-cyan);">
+                        <span>Total Latency:</span> <strong style="color: var(--accent-cyan);">4.59s</strong>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="scenario-card" data-status="PASS" data-category="E-commerce">
+                <div class="scenario-header">
+                    <div class="scenario-title">
+                        🛒 Promo Code Application Failure
+                        <span class="scenario-id">ECOMMERCE_004</span>
+                    </div>
+                    <div class="badge pass">
+                        PASS
+                    </div>
+                </div>
+
+                <div class="dialogue-grid">
+                    <div class="dialogue-box">
+                        <div class="dialogue-label">👤 User Spoke (Transcribed by Whisper)</div>
+                        <div class="dialogue-text">"I tried to use promo code 'WELCOME20' at checkout for my cart, but it said the code was invalid. Why didn't it work?"</div>
+                    </div>
+                    <div class="dialogue-box">
+                        <div class="dialogue-label">🤖 Chatbot Voice Answer (Synthesized by TTS)</div>
+                        <div class="dialogue-text">"The promotional code 'WELCOME20' requires a minimum order subtotal of $50.00 to activate, which is why the system declined it for a $45.00 cart."</div>
+                    </div>
+                </div>
+
+                <div class="metrics-bar">
+                    <div class="metric-pill good">
+                        <span>Correctness:</span> <strong>0.91</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>Relevancy:</span> <strong>0.97</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>Hallucination:</span> <strong>0.08</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>WER:</span> <strong>0.05</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>CER:</span> <strong>0.03</strong>
+                    </div>
+                    <div class="metric-pill">
+                        <span>STT Latency:</span> <strong>0.61s</strong>
+                    </div>
+                    <div class="metric-pill">
+                        <span>LLM Latency:</span> <strong>1.73s</strong>
+                    </div>
+                    <div class="metric-pill">
+                        <span>TTS Latency:</span> <strong>2.34s</strong>
+                    </div>
+                    <div class="metric-pill" style="background: rgba(0, 242, 254, 0.1); border-color: var(--accent-cyan);">
+                        <span>Total Latency:</span> <strong style="color: var(--accent-cyan);">4.68s</strong>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="scenario-card" data-status="PASS" data-category="E-commerce">
+                <div class="scenario-header">
+                    <div class="scenario-title">
+                        🛒 Out-of-Stock SMS Restock Alert
+                        <span class="scenario-id">ECOMMERCE_005</span>
+                    </div>
+                    <div class="badge pass">
+                        PASS
+                    </div>
+                </div>
+
+                <div class="dialogue-grid">
+                    <div class="dialogue-box">
+                        <div class="dialogue-label">👤 User Spoke (Transcribed by Whisper)</div>
+                        <div class="dialogue-text">"The Apex Pro running shoes in Blue size 10.5 are out of stock. Do you know when you will get more in?"</div>
+                    </div>
+                    <div class="dialogue-box">
+                        <div class="dialogue-label">🤖 Chatbot Voice Answer (Synthesized by TTS)</div>
+                        <div class="dialogue-text">"Our inventory shipment schedule shows that we are receiving a fresh warehouse restock of the Apex Pro running shoes in Blue size 10.5 next Friday, July 11th."</div>
+                    </div>
+                </div>
+
+                <div class="metrics-bar">
+                    <div class="metric-pill good">
+                        <span>Correctness:</span> <strong>0.98</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>Relevancy:</span> <strong>0.97</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>Hallucination:</span> <strong>0.01</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>WER:</span> <strong>0.03</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>CER:</span> <strong>0.01</strong>
+                    </div>
+                    <div class="metric-pill">
+                        <span>STT Latency:</span> <strong>1.04s</strong>
+                    </div>
+                    <div class="metric-pill">
+                        <span>LLM Latency:</span> <strong>1.42s</strong>
+                    </div>
+                    <div class="metric-pill">
+                        <span>TTS Latency:</span> <strong>2.22s</strong>
+                    </div>
+                    <div class="metric-pill" style="background: rgba(0, 242, 254, 0.1); border-color: var(--accent-cyan);">
+                        <span>Total Latency:</span> <strong style="color: var(--accent-cyan);">4.68s</strong>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="scenario-card" data-status="PASS" data-category="Customer Support">
+                <div class="scenario-header">
+                    <div class="scenario-title">
+                        🎧 MFA Account Lockout Reset
+                        <span class="scenario-id">SUPPORT_001</span>
+                    </div>
+                    <div class="badge pass">
+                        PASS
+                    </div>
+                </div>
+
+                <div class="dialogue-grid">
+                    <div class="dialogue-box">
+                        <div class="dialogue-label">👤 User Spoke (Transcribed by Whisper)</div>
+                        <div class="dialogue-text">"I got a new phone and lost my authenticator app codes. I am locked out of my corporate account and cannot log in."</div>
+                    </div>
+                    <div class="dialogue-box">
+                        <div class="dialogue-label">🤖 Chatbot Voice Answer (Synthesized by TTS)</div>
+                        <div class="dialogue-text">"I understand how frustrating account lockouts can be. To protect your corporate account, I have initiated an automated identity verification link to your registered recovery email address."</div>
+                    </div>
+                </div>
+
+                <div class="metrics-bar">
+                    <div class="metric-pill good">
+                        <span>Correctness:</span> <strong>0.9</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>Relevancy:</span> <strong>0.89</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>Hallucination:</span> <strong>0.07</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>WER:</span> <strong>0.07</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>CER:</span> <strong>0.04</strong>
+                    </div>
+                    <div class="metric-pill">
+                        <span>STT Latency:</span> <strong>0.72s</strong>
+                    </div>
+                    <div class="metric-pill">
+                        <span>LLM Latency:</span> <strong>1.66s</strong>
+                    </div>
+                    <div class="metric-pill">
+                        <span>TTS Latency:</span> <strong>1.83s</strong>
+                    </div>
+                    <div class="metric-pill" style="background: rgba(0, 242, 254, 0.1); border-color: var(--accent-cyan);">
+                        <span>Total Latency:</span> <strong style="color: var(--accent-cyan);">4.21s</strong>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="scenario-card" data-status="PASS" data-category="Customer Support">
+                <div class="scenario-header">
+                    <div class="scenario-title">
+                        🎧 SaaS Subscription Tier Cancellation
+                        <span class="scenario-id">SUPPORT_002</span>
+                    </div>
+                    <div class="badge pass">
+                        PASS
+                    </div>
+                </div>
+
+                <div class="dialogue-grid">
+                    <div class="dialogue-box">
+                        <div class="dialogue-label">👤 User Spoke (Transcribed by Whisper)</div>
+                        <div class="dialogue-text">"I want to cancel my Pro plan monthly subscription for account ID PRO-9910. We don't need the advanced features anymore."</div>
+                    </div>
+                    <div class="dialogue-box">
+                        <div class="dialogue-label">🤖 Chatbot Voice Answer (Synthesized by TTS)</div>
+                        <div class="dialogue-text">"I have processed your cancellation request for account PRO-9910. Your subscription has been set to downgrade to our Free Basic tier at the end of your current term."</div>
+                    </div>
+                </div>
+
+                <div class="metrics-bar">
+                    <div class="metric-pill good">
+                        <span>Correctness:</span> <strong>0.94</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>Relevancy:</span> <strong>0.9</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>Hallucination:</span> <strong>0.02</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>WER:</span> <strong>0.03</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>CER:</span> <strong>0.01</strong>
+                    </div>
+                    <div class="metric-pill">
+                        <span>STT Latency:</span> <strong>0.72s</strong>
+                    </div>
+                    <div class="metric-pill">
+                        <span>LLM Latency:</span> <strong>1.11s</strong>
+                    </div>
+                    <div class="metric-pill">
+                        <span>TTS Latency:</span> <strong>2.67s</strong>
+                    </div>
+                    <div class="metric-pill" style="background: rgba(0, 242, 254, 0.1); border-color: var(--accent-cyan);">
+                        <span>Total Latency:</span> <strong style="color: var(--accent-cyan);">4.5s</strong>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="scenario-card" data-status="PASS" data-category="Customer Support">
+                <div class="scenario-header">
+                    <div class="scenario-title">
+                        🎧 Pro-Rated Invoice Explanation
+                        <span class="scenario-id">SUPPORT_003</span>
+                    </div>
+                    <div class="badge pass">
+                        PASS
+                    </div>
+                </div>
+
+                <div class="dialogue-grid">
+                    <div class="dialogue-box">
+                        <div class="dialogue-label">👤 User Spoke (Transcribed by Whisper)</div>
+                        <div class="dialogue-text">"Why is my invoice #INV-4021 for this month $145.00? My subscription is normally only $100.00 a month."</div>
+                    </div>
+                    <div class="dialogue-box">
+                        <div class="dialogue-label">🤖 Chatbot Voice Answer (Synthesized by TTS)</div>
+                        <div class="dialogue-text">"I checked invoice #INV-4021, and the $45.00 difference is a pro-rated charge for adding 3 new team member seats to your workspace in the middle of the billing cycle."</div>
+                    </div>
+                </div>
+
+                <div class="metrics-bar">
+                    <div class="metric-pill good">
+                        <span>Correctness:</span> <strong>0.94</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>Relevancy:</span> <strong>0.91</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>Hallucination:</span> <strong>0.07</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>WER:</span> <strong>0.08</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>CER:</span> <strong>0.04</strong>
+                    </div>
+                    <div class="metric-pill">
+                        <span>STT Latency:</span> <strong>1.05s</strong>
+                    </div>
+                    <div class="metric-pill">
+                        <span>LLM Latency:</span> <strong>1.53s</strong>
+                    </div>
+                    <div class="metric-pill">
+                        <span>TTS Latency:</span> <strong>2.57s</strong>
+                    </div>
+                    <div class="metric-pill" style="background: rgba(0, 242, 254, 0.1); border-color: var(--accent-cyan);">
+                        <span>Total Latency:</span> <strong style="color: var(--accent-cyan);">5.15s</strong>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="scenario-card" data-status="PASS" data-category="Customer Support">
+                <div class="scenario-header">
+                    <div class="scenario-title">
+                        🎧 Desktop App macOS Upgrade Startup Error
+                        <span class="scenario-id">SUPPORT_004</span>
+                    </div>
+                    <div class="badge pass">
+                        PASS
+                    </div>
+                </div>
+
+                <div class="dialogue-grid">
+                    <div class="dialogue-box">
+                        <div class="dialogue-label">👤 User Spoke (Transcribed by Whisper)</div>
+                        <div class="dialogue-text">"Since I upgraded my Mac to macOS Sonoma yesterday, your desktop application crashes immediately whenever I try to open it."</div>
+                    </div>
+                    <div class="dialogue-box">
+                        <div class="dialogue-label">🤖 Chatbot Voice Answer (Synthesized by TTS)</div>
+                        <div class="dialogue-text">"We are aware of a caching conflict between older desktop app builds and macOS Sonoma. We released a hotfix patch in version 4.2.1 to resolve this exact launch crash."</div>
+                    </div>
+                </div>
+
+                <div class="metrics-bar">
+                    <div class="metric-pill good">
+                        <span>Correctness:</span> <strong>0.98</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>Relevancy:</span> <strong>0.97</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>Hallucination:</span> <strong>0.02</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>WER:</span> <strong>0.02</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>CER:</span> <strong>0.01</strong>
+                    </div>
+                    <div class="metric-pill">
+                        <span>STT Latency:</span> <strong>0.75s</strong>
+                    </div>
+                    <div class="metric-pill">
+                        <span>LLM Latency:</span> <strong>1.26s</strong>
+                    </div>
+                    <div class="metric-pill">
+                        <span>TTS Latency:</span> <strong>2.57s</strong>
+                    </div>
+                    <div class="metric-pill" style="background: rgba(0, 242, 254, 0.1); border-color: var(--accent-cyan);">
+                        <span>Total Latency:</span> <strong style="color: var(--accent-cyan);">4.58s</strong>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="scenario-card" data-status="PASS" data-category="Customer Support">
+                <div class="scenario-header">
+                    <div class="scenario-title">
+                        🎧 Enterprise Team Workspace Sales Demo
+                        <span class="scenario-id">SUPPORT_005</span>
+                    </div>
+                    <div class="badge pass">
+                        PASS
+                    </div>
+                </div>
+
+                <div class="dialogue-grid">
+                    <div class="dialogue-box">
+                        <div class="dialogue-label">👤 User Spoke (Transcribed by Whisper)</div>
+                        <div class="dialogue-text">"We have a team of 15 engineers and want to upgrade to the Enterprise plan to get SAML SSO and dedicated 24/7 support."</div>
+                    </div>
+                    <div class="dialogue-box">
+                        <div class="dialogue-label">🤖 Chatbot Voice Answer (Synthesized by TTS)</div>
+                        <div class="dialogue-text">"Our Enterprise tier is perfect for your engineering team! It includes unlimited SAML SSO integrations, custom role-based permissions, and a dedicated 24/7 Technical Account Manager."</div>
+                    </div>
+                </div>
+
+                <div class="metrics-bar">
+                    <div class="metric-pill good">
+                        <span>Correctness:</span> <strong>0.89</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>Relevancy:</span> <strong>0.96</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>Hallucination:</span> <strong>0.03</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>WER:</span> <strong>0.01</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>CER:</span> <strong>0.01</strong>
+                    </div>
+                    <div class="metric-pill">
+                        <span>STT Latency:</span> <strong>0.82s</strong>
+                    </div>
+                    <div class="metric-pill">
+                        <span>LLM Latency:</span> <strong>1.69s</strong>
+                    </div>
+                    <div class="metric-pill">
+                        <span>TTS Latency:</span> <strong>2.19s</strong>
+                    </div>
+                    <div class="metric-pill" style="background: rgba(0, 242, 254, 0.1); border-color: var(--accent-cyan);">
+                        <span>Total Latency:</span> <strong style="color: var(--accent-cyan);">4.7s</strong>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="scenario-card" data-status="PASS" data-category="Support">
+                <div class="scenario-header">
+                    <div class="scenario-title">
+                        🎧 Flight Ticket Booking Turn
+                        <span class="scenario-id">SCENARIO_FLIGHT_001</span>
+                    </div>
+                    <div class="badge pass">
+                        PASS
+                    </div>
+                </div>
+
+                <div class="dialogue-grid">
+                    <div class="dialogue-box">
+                        <div class="dialogue-label">👤 User Spoke (Transcribed by Whisper)</div>
+                        <div class="dialogue-text">"Hello"</div>
+                    </div>
+                    <div class="dialogue-box">
+                        <div class="dialogue-label">🤖 Chatbot Voice Answer (Synthesized by TTS)</div>
+                        <div class="dialogue-text">"Hello! How can I help you with your travel plans today?"</div>
+                    </div>
+                </div>
+
+                <div class="metrics-bar">
+                    <div class="metric-pill good">
+                        <span>Correctness:</span> <strong>0.97</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>Relevancy:</span> <strong>0.95</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>Hallucination:</span> <strong>0.03</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>WER:</span> <strong>0.05</strong>
+                    </div>
+                    <div class="metric-pill good">
+                        <span>CER:</span> <strong>0.03</strong>
+                    </div>
+                    <div class="metric-pill">
+                        <span>STT Latency:</span> <strong>0.75s</strong>
+                    </div>
+                    <div class="metric-pill">
+                        <span>LLM Latency:</span> <strong>1.29s</strong>
+                    </div>
+                    <div class="metric-pill">
+                        <span>TTS Latency:</span> <strong>1.95s</strong>
+                    </div>
+                    <div class="metric-pill" style="background: rgba(0, 242, 254, 0.1); border-color: var(--accent-cyan);">
+                        <span>Total Latency:</span> <strong style="color: var(--accent-cyan);">3.99s</strong>
+                    </div>
+                </div>
+                
+            </div>
+            
+        </div>
+
+        <!-- Footer -->
+        footer>
+            Voice Chatbot Automation Evaluation Framework &bull; Built with FastAPI, OpenAI Whisper, GPT-4o, and DeepEval G-Eval &bull; &copy; 2026 Enterprise QA
+        </footer>
+    </div>
+
+    <!-- Chart.js Logic -->
+    <script>
+        // Data injected from Python
+        const chartData = {"radar_values": [0.93, 0.93, 0.94, 0.94, 0.96], "scenario_labels": ["LIVE_MIC_001", "LIVE_MIC_002", "BANKING_001", "BANKING_002", "BANKING_003", "BANKING_004", "BANKING_005", "HEALTHCARE_001", "HEALTHCARE_002", "HEALTHCARE_003"], "stt_latencies": [0.82, 0.79, 0.82, 1.05, 1.04, 0.8, 0.99, 0.92, 1.01, 0.86], "llm_latencies": [1.45, 1.62, 1.51, 1.18, 1.67, 1.15, 1.67, 1.62, 1.31, 1.23], "tts_latencies": [2.1, 2.45, 2.59, 2.79, 1.86, 2.73, 2.38, 2.52, 2.5, 2.66]};
+        
+        // 1. Radar Chart: Quality Metrics
+        const ctxRadar = document.getElementById('qualityRadarChart').getContext('2d');
+        new Chart(ctxRadar, {
+            type: 'radar',
+            data: {
+                labels: ['Correctness', 'Relevancy', 'Faithfulness', 'Non-Hallucination', 'Speech Accuracy (1-WER)'],
+                datasets: [{
+                    label: 'Current Build SLA',
+                    data: chartData.radar_values,
+                    backgroundColor: 'rgba(0, 242, 254, 0.2)',
+                    borderColor: '#00f2fe',
+                    pointBackgroundColor: '#00e676',
+                    pointBorderColor: '#fff',
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: '#00e676',
+                    borderWidth: 2
+                }, {
+                    label: 'Enterprise Target SLA',
+                    data: [0.85, 0.85, 0.90, 0.85, 0.90],
+                    backgroundColor: 'rgba(179, 136, 255, 0.1)',
+                    borderColor: '#b388ff',
+                    borderDash: [5, 5],
+                    pointBackgroundColor: '#b388ff',
+                    borderWidth: 1.5
+                }]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                scales: {
+                    r: {
+                        angleLines: { color: 'rgba(255, 255, 255, 0.1)' },
+                        grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                        pointLabels: { color: '#f0f4f8', font: { size: 12, family: 'Outfit' } },
+                        ticks: { color: '#8e9bad', backdropColor: 'transparent', stepSize: 0.2 },
+                        suggestedMin: 0, suggestedMax: 1.0
+                    }
+                },
+                plugins: { legend: { labels: { color: '#f0f4f8', font: { family: 'Outfit' } } } }
+            }
+        });
+
+        // 2. Bar Chart: Latency Breakdown
+        const ctxBar = document.getElementById('latencyBarChart').getContext('2d');
+        new Chart(ctxBar, {
+            type: 'bar',
+            data: {
+                labels: chartData.scenario_labels,
+                datasets: [{
+                    label: 'Whisper STT (s)',
+                    data: chartData.stt_latencies,
+                    backgroundColor: '#4facfe'
+                }, {
+                    label: 'GPT-4o LLM (s)',
+                    data: chartData.llm_latencies,
+                    backgroundColor: '#00f2fe'
+                }, {
+                    label: 'OpenAI TTS (s)',
+                    data: chartData.tts_latencies,
+                    backgroundColor: '#b388ff'
+                }]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                scales: {
+                    x: { stacked: true, grid: { color: 'rgba(255, 255, 255, 0.05)' }, ticks: { color: '#8e9bad' } },
+                    y: { stacked: true, grid: { color: 'rgba(255, 255, 255, 0.1)' }, ticks: { color: '#8e9bad' }, title: { display: true, text: 'Seconds', color: '#8e9bad' } }
+                },
+                plugins: {
+                    legend: { labels: { color: '#f0f4f8', font: { family: 'Outfit' } } },
+                    tooltip: { mode: 'index', intersect: false }
+                }
+            }
+        });
+
+        // Filter Functionality
+        function filterScenarios(filterType, btnElem) {
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            btnElem.classList.add('active');
+
+            const cards = document.querySelectorAll('.scenario-card');
+            cards.forEach(card => {
+                const status = card.getAttribute('data-status');
+                const category = card.getAttribute('data-category');
+                
+                if (filterType === 'ALL') {
+                    card.style.display = 'block';
+                } else if (filterType === 'PASS') {
+                    card.style.display = status === 'PASS' ? 'block' : 'none';
+                } else if (filterType === 'FAIL') {
+                    card.style.display = status !== 'PASS' ? 'block' : 'none';
+                } else {
+                    card.style.display = category.toLowerCase() === filterType.toLowerCase() ? 'block' : 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+{
+  "conversation_id": "SUPPORT_004",
+  "scenario_name": "Desktop App macOS Upgrade Startup Error",
+  "category": "Customer Support",
+  "description": "User reports desktop application crashing on launch immediately after upgrading their computer to macOS Sonoma.",
+  "system_prompt": "You are a technical support engineering AI. Troubleshoot operating system compatibility, cache clearing, and clean re-installations.",
+  "user_conversation": [
+    "Since I upgraded my Mac to macOS Sonoma yesterday, your desktop application crashes immediately whenever I try to open it.",
+    "Is there a known patch or fix for macOS Sonoma compatibility?"
+  ],
+  "conversation": [
+    {
+      "user": "Since I upgraded my Mac to macOS Sonoma yesterday, your desktop application crashes immediately whenever I try to open it.",
+      "assistant": "We are aware of a caching conflict between older desktop app builds and macOS Sonoma. We released a hotfix patch in version 4.2.1 to resolve this exact launch crash."
+    },
+    {
+      "user": "Is there a known patch or fix for macOS Sonoma compatibility?",
+      "assistant": "To fix this, please delete your local application cache by deleting the '~/.config/app_cache' folder, then download and install version 4.2.1 from our download portal.",
+      "expected": "Delete the local cache folder '~/.config/app_cache' and install the latest version 4.2.1 patch from our website."
+    }
+  ],
+  "expected_behavior": "Chatbot identifies known compatibility issue with macOS Sonoma, references hotfix version 4.2.1, and provides terminal cache clearing instruction.",
+  "expected_answer": "This crash is caused by a macOS Sonoma caching conflict. To resolve it, delete the '~/.config/app_cache' folder on your Mac and install the updated version 4.2.1 from our download portal.",
+  "expected_evaluation_score": 0.95
+}
