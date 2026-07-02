@@ -12,7 +12,9 @@ An enterprise-grade, clean-architecture framework designed for **end-to-end voic
 > 💡 **In plain English:** This is a toolkit that (1) lets a computer listen to you, understand you, talk back to you, and (2) automatically checks whether that computer is doing a *good* job — checking if it heard you correctly, answered sensibly, and replied at a reasonable speed — without a human needing to sit and grade every conversation by hand.
 
 > [!IMPORTANT]
-> **New to Voice Chatbot Testing?** Check out our comprehensive step-by-step masterclass: **[📘 Voice Chatbot Automation FAQ & Guide](file:///c:/Users/mvsar/Projects/VOICECHATBOTAUTOMATION/FAQ.md)** for detailed explanations on prerequisites, integrations, Word Error Rate (WER) algorithms, and exact execution commands!
+> **New to Voice Chatbot Testing?** Check out our comprehensive guides:
+> * **[🚀 Step-by-Step Layman Guide (`stepguide.md`)](file:///c:/Users/mvsar/Projects/VOICECHATBOTAUTOMATION/stepguide.md)** — Zero-to-ready layman instructions to install software, build from scratch, and run your first test in simple English!
+> * **[📘 Technical Masterclass FAQ (`FAQ.md`)](file:///c:/Users/mvsar/Projects/VOICECHATBOTAUTOMATION/FAQ.md)** — Deep-dive explanations on architecture, Word Error Rate (WER) mathematics, DeepEval G-Eval metrics, and CI/CD integration!
 
 ---
 
